@@ -28,12 +28,11 @@ Follow instructions here: https://github.com/rlaPHOENiX/VSMPEG/blob/master/READM
 It's super simple, configure the CFG variable found below.
 """
 
-
 CFG = {
 	# print useful information about the source video
 	"debug": True,
 	# choose video file to use, support's all kinds of formats and containers
-	"file_path": r"file:///mnt/emby-red/tv/Family Guy/Family.Guy.S01.480p.DVD.REMUX.DD2.0.MPEG-PHOENiX/Family.Guy.S01E01.Death.Has.a.Shadow.480p.DVD.REMUX.DD2.0.MPEG-PHOENiX.mkv",
+	"file_path": r"file:///mnt/emby/tv/American Dad/American.Dad.S04.1080p.NF.WEB-DL.DD5.1.x264-CtrlHD/American.Dad.S04E02.Meter.Made.1080p.NF.WEB-DL.DD5.1.x264-CtrlHD.mkv",
 	# the deinterlacer options
 	"deinterlace": {
 		# deinterlacer function to use, e.g. `"kernel": havsfunc.QTGMC`. `None` defaults to Havsfunc's QTGMC
@@ -224,35 +223,32 @@ CFG = {
 		"enabled": False,
 		"compare": 1,  # Compare between input and output of VSGAN, 0=Off, 1==Interleave, 2==StackHorizontal, 3==mvsfunc.Preview
 		"output_yuv": False,  # Convert Result frame to YUV, recommended if encoding to video with FFMPEG, otherwise disable
-		"executions": [{
-			"enabled": True,
-			"model": r"/home/phoenix/github/BasicSR-dev2/experiments/pkmnIntroLineClean/models/35000_G.pth",
-			"device": 0,
-			"chunk": False,
-			"presample": 1080,
-			"resample": 1080
-		}, {
-			"enabled": False,
-			"model": r"/home/phoenix/Desktop/experiments/SpongeBob.CEL.2.HD.125ki.499e.16.208psnr-PHOENiX.pth",
-			"device": 0,
-			"chunk": False,
-			"presample": None,
-			"resample": 1080
-		}, {
-			"enabled": True,
-			"model": r"/home/phoenix/github/BasicSR-dev2/experiments/pkmnbd2hd/models/80000_G.pth",
-			"device": 0,
-			"chunk": False,
-			"presample": 1080,
-			"resample": 1080
-		}, {
-			"enabled": False,
-			"model": r"/home/phoenix/github/BasicSR/experiments/old_models/pokemon_br2remaster.pth",
-			"device": 1,
-			"chunk": False,
-			"presample": None,
-			"resample": 1080
-		}]
+		"executions": [
+			{
+				"enabled": False,
+				"model": r"/home/phoenix/github/BasicSR-vic/experiments/adntsc2hd/models/300000_G.pth",
+				"device": 1,
+				"chunk": False,
+				"presample": False,
+				"resample": 1080
+			},
+			{
+				"enabled": True,
+				"model": r"/home/phoenix/Downloads/2x_real_pokemodel_v2_final_G.pth",
+				"device": 1,
+				"chunk": False,
+				"presample": False,
+				"resample": 1080
+			},
+			{
+				"enabled": False,
+				"model": r"/home/phoenix/github/BasicSR-vic/experiments/pkmnbd2hd/models/140000_G.pth",
+				"device": 1,
+				"chunk": False,
+				"presample": 1080,
+				"resample": 1080
+			},
+		]
 	},
 	"aspect_ratio": {
 		# """
@@ -270,7 +266,7 @@ CFG = {
 		# """
 		"enabled": False,
 		"mode": 0,  # 0 == squash width, 1 == stretch height
-		#"forced_ar": [16, 9],
+		#"forced_ar": "3:2",
 		"kernel": core.resize.Spline64  # Good options are Spline64, Bicubic and Nearest-Neighbour/Point depending on what you need done.
 	}
 }
@@ -376,17 +372,21 @@ if CFG["vsgan"]["enabled"]:
 		clip = core.std.Interleave(clip) if CFG["vsgan"]["compare"] == 1 else core.std.StackHorizontal(clip) if CFG["vsgan"]["compare"] == 2 else mvsfunc.Preview(clip)
 
 # Aspect Ratio
-if CFG["aspect_ratio"]["enabled"] and sourcer == "core.d2v.Source":
-	d2v = D2V(clip.get_frame(0).props["PVSFilePath"])
-	aspect_ratio = d2v.settings["Aspect_Ratio"]
-	aspect_ratio_s = CFG["aspect_ratio"]["forced_ar"] if "forced_ar" in CFG["aspect_ratio"] else [int(x) for x in aspect_ratio.split(":")]
-	calculated_width = clip.height * (aspect_ratio_s[0] / aspect_ratio_s[1])
-	calculated_height = clip.width / (aspect_ratio_s[0] / aspect_ratio_s[1])
+if CFG["aspect_ratio"]["enabled"]:
+	if "forced_ar" in CFG["aspect_ratio"]:
+		aspect_ratio = CFG["aspect_ratio"]["forced_ar"]
+	elif sourcer == "core.d2v.Source":
+		d2v = D2V(clip.get_frame(0).props["PVSFilePath"])
+		aspect_ratio = d2v.settings["Aspect_Ratio"]
+	else:
+		aspect_ratio = None
+	if isinstance(aspect_ratio, str):
+		aspect_ratio = [int(x) for x in aspect_ratio.split(":")]
+	calculated_width = clip.height * (aspect_ratio[0] / aspect_ratio[1])
+	calculated_height = clip.width / (aspect_ratio[0] / aspect_ratio[1])
 	if CFG["vsgan"]["enabled"] and CFG["vsgan"]["compare"] == 2:
 		# make the width double to accomodate vsgan compare mode 2 if used
 		calculated_width = calculated_width * 2
-	if calculated_width != math.ceil(calculated_width):
-		aspect_ratio += f" [rounded]"
 	# Convert from rectangular PAR to square PAR by:
 	if CFG["aspect_ratio"]["mode"] == 0:
 		# squashing width
