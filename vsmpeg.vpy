@@ -107,13 +107,28 @@ IO_MAP = {
 
 # /!\ Do not edit beyond here unless you know what your doing /!\
 
+# == Argument Stage ==
+args = ["i", "res", "fps", "chroma_loc", "debug"]
+for arg in args:
+	if arg in locals():
+		DEBUG = False
+		arg_v = locals()[arg].decode("utf-8")
+		if arg == "i":
+			IO_MAP["file"] = arg_v
+		elif arg == "res":
+			arg_v = [int(x) for x in arg_v.split("x")]
+			IO_MAP["resolution"]["width"] = arg_v[0]
+			IO_MAP["resolution"]["height"] = arg_v[1]
+		elif arg == "fps":
+			arg_v = [int(x) for x in arg_v.split("/")]
+			IO_MAP["fps"]["numerator"] = arg_v[0]
+			IO_MAP["fps"]["denominator"] = arg_v[1]
+		elif arg == "chroma_loc":
+			IO_MAP["color"]["chroma_location"] = int(arg_v)
+		elif arg == "debug":
+			DEBUG = bool(arg_v)
+
 # == File Stage ==
-# get file path from vspipe if passed
-try:
-	IO_MAP["file"] = FILEPATH.decode("utf-8")
-	DEBUG = False
-except NameError:
-	pass
 # remove file: prefix from path, cross-os
 IO_MAP["file"] = anti_file_prefix(IO_MAP["file"])
 # if the fps has been modified in the container, revert it back to the original
