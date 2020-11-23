@@ -30,7 +30,7 @@ It's super simple, configure the IO_MAP variable found below.
 The IO_MAP variable is asking what you want the output to be.
 """
 
-DEBUG = True
+DEBUG = False
 IO_MAP = {
 	"file": "file:///run/media/phoenix/emby-4-sea/discs/dvd/American Dad/American.Dad.V03.USA.NTSC.3xDVD9.MPEG-2.DD.5.1-PHOENiX/Disc 2/VIDEO_TS/VTS_07_1.VOB",
 	"scan": {
@@ -75,7 +75,7 @@ IO_MAP = {
 		# """
 		"enabled": False,
 		"compare": 1,  # Compare between input and output of VSGAN, 0=Off, 1==Interleave, 2==StackHorizontal, 3==mvsfunc.Preview
-		"output_yuv": True,  # Convert Result frame to YUV, recommended if encoding to video with FFMPEG, otherwise disable
+		"output_yuv": False,  # Convert Result frame to YUV, recommended if encoding to video with FFMPEG, otherwise disable
 		"executions": [
 			{
 				"enabled": True,
@@ -195,7 +195,7 @@ if "dar" in IO_MAP["resolution"]["means"] and res_differ():
 			d2v = D2V(clip.get_frame(0).props["PVSFilePath"])
 			dar = (d2v.settings["Aspect_Ratio"], dar[1])
 		else:
-			dar = (None)
+			dar = (None,)
 	if dar[0]:
 		aspect_ratio = [int(x) for x in dar[0].split(":")]
 		calculated_width = math.ceil(clip.height * (aspect_ratio[0] / aspect_ratio[1]))
@@ -208,7 +208,8 @@ if res_differ():
 	clip = core.text.Text(
 		clip,
 		"Warning: The wanted resolution could not be obtained. " +
-		"Make sure you enabled one of it's means options."
+		"Make sure you enabled one of it's means options. " +
+		"It's possible the wanted resolution simply couldn't be obtained with the means used as well."
 	)
 
 # == VSGAN Stage ==
