@@ -250,6 +250,13 @@ CFG = {
 			},
 		]
 	},
+	"cropping": {
+		"enabled": False,
+		"left": 3 + 3,
+		"right": 3 + 3,
+		"top": 0,
+		"bottom": 0
+	},
 	"aspect_ratio": {
 		# """
 		# Convert the aspect ratio of the stored frames from rectangular PAR to square PAR.
@@ -371,6 +378,10 @@ if CFG["vsgan"]["enabled"]:
 		]
 		clip = core.std.Interleave(clip) if CFG["vsgan"]["compare"] == 1 else core.std.StackHorizontal(clip) if CFG["vsgan"]["compare"] == 2 else mvsfunc.Preview(clip)
 
+# Cropping
+if CFG["cropping"]["enabled"]:
+	clip = core.std.Crop(clip, **{k: v for k, v in CFG["cropping"].items() if k != "enabled"})
+
 # Aspect Ratio
 if CFG["aspect_ratio"]["enabled"]:
 	if "forced_ar" in CFG["aspect_ratio"]:
@@ -382,17 +393,18 @@ if CFG["aspect_ratio"]["enabled"]:
 		aspect_ratio = None
 	if isinstance(aspect_ratio, str):
 		aspect_ratio = [int(x) for x in aspect_ratio.split(":")]
-	calculated_width = clip.height * (aspect_ratio[0] / aspect_ratio[1])
-	calculated_height = clip.width / (aspect_ratio[0] / aspect_ratio[1])
-	if CFG["vsgan"]["enabled"] and CFG["vsgan"]["compare"] == 2:
-		# make the width double to accomodate vsgan compare mode 2 if used
-		calculated_width = calculated_width * 2
-	# Convert from rectangular PAR to square PAR by:
-	if CFG["aspect_ratio"]["mode"] == 0:
-		# squashing width
-		clip = CFG["aspect_ratio"]["kernel"](clip=clip, width=math.ceil(calculated_width))
-	elif CFG["aspect_ratio"]["mode"] == 1:
-		# stretching height
-		clip = CFG["aspect_ratio"]["kernel"](clip=clip, height=math.ceil(calculated_height))
+	if aspect_ratio:
+		calculated_width = clip.height * (aspect_ratio[0] / aspect_ratio[1])
+		calculated_height = clip.width / (aspect_ratio[0] / aspect_ratio[1])
+		if CFG["vsgan"]["enabled"] and CFG["vsgan"]["compare"] == 2:
+			# make the width double to accomodate vsgan compare mode 2 if used
+			calculated_width = calculated_width * 2
+		# Convert from rectangular PAR to square PAR by:
+		if CFG["aspect_ratio"]["mode"] == 0:
+			# squashing width
+			clip = CFG["aspect_ratio"]["kernel"](clip=clip, width=math.ceil(calculated_width))
+		elif CFG["aspect_ratio"]["mode"] == 1:
+			# stretching height
+			clip = CFG["aspect_ratio"]["kernel"](clip=clip, height=math.ceil(calculated_height))
 
 clip.set_output()
