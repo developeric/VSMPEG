@@ -120,7 +120,7 @@ for arg in args:
 			IO_MAP["resolution"]["width"] = arg_v[0]
 			IO_MAP["resolution"]["height"] = arg_v[1]
 		elif arg == "fps":
-			arg_v = [int(x) for x in arg_v.split("/")]
+			arg_v = [int(float(x)) for x in arg_v.split("/")]
 			IO_MAP["fps"]["numerator"] = arg_v[0]
 			IO_MAP["fps"]["denominator"] = arg_v[1] if len(arg_v) == 2 else 1
 		elif arg == "chroma_loc":
