@@ -122,7 +122,7 @@ for arg in args:
 		elif arg == "fps":
 			arg_v = [int(x) for x in arg_v.split("/")]
 			IO_MAP["fps"]["numerator"] = arg_v[0]
-			IO_MAP["fps"]["denominator"] = arg_v[1]
+			IO_MAP["fps"]["denominator"] = arg_v[1] if len(arg_v) == 2 else 1
 		elif arg == "chroma_loc":
 			IO_MAP["color"]["chroma_location"] = int(arg_v)
 		elif arg == "debug":
