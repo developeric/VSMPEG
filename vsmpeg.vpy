@@ -58,7 +58,7 @@ IO_MAP = {
 		"means": {
 			"split_per_vob_cell": True,  # reset cycle every time it enters a new vob cell (if using .VOB)
 			"SelectEvery": (5, [0, 1, 3, 4]),  # cycle (int), offsets (list<int>)
-			#"VDecimate": (5),  # args of VDecimate. (not recommended: git.io/avoid-tdecimate)
+			#"VDecimate": 5,  # args of VDecimate. (not recommended: git.io/avoid-tdecimate)
 		}
 	},
 	"color": {
@@ -164,17 +164,17 @@ clip = PDeinterlacer(clip, *IO_MAP["scan"]["means"], debug=DEBUG).clip
 # == FPS Stage ==
 # Decimate
 if [clip.fps.numerator, clip.fps.denominator] != [IO_MAP["fps"]["numerator"], IO_MAP["fps"]["denominator"]]:
-	decimation_means = [k for k in IO_MAP["fps"]["means"].keys() if k != "split_per_vob_cell"][0]
-	decimation_mode = {"SelectEvery": 0, "VDecimate": 1}[decimation_means]
-	decimation_means = IO_MAP["fps"]["means"][decimation_means]
-	clip = PDecimate(
-		clip=clip,
-		per_vob_id=IO_MAP["fps"]["means"]["split_per_vob_cell"],
-		mode=decimation_mode,
-		cycle=decimation_means[0],
-		offsets=decimation_means[1] if len(decimation_means) >= 2 else None,
-		debug=DEBUG
-	).clip
+	for decimation_mode, means in [(k, v) for k, v in IO_MAP["fps"]["means"].items() if k != "split_per_vob_cell"]:
+		if not isinstance(means, tuple):
+			means = (means,)
+		clip = PDecimate(
+			clip=clip,
+			per_vob_id=IO_MAP["fps"]["means"]["split_per_vob_cell"],
+			mode={"SelectEvery": 0, "VDecimate": 1}[decimation_mode],
+			cycle=means[0],
+			offsets=means[1] if len(means) >= 2 else None,
+			debug=DEBUG
+		).clip
 
 # == Color stage ==
 # Chroma location
