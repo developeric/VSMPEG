@@ -15,7 +15,6 @@ from pvsfunc.pdebox import PDebox
 from pvsfunc.pdecimate import PDecimate
 from pvsfunc.helpers import anti_file_prefix
 from pyd2v import D2V
-from pymediainfo import MediaInfo
 import havsfunc
 
 
@@ -129,29 +128,6 @@ for arg in args:
 			DEBUG = bool(arg_v)
 
 # == File Stage ==
-# remove file: prefix from path, cross-os
-IO_MAP["file"] = anti_file_prefix(IO_MAP["file"])
-# if the fps has been modified in the container, revert it back to the original
-# todo ; only do this for AVC
-mi = MediaInfo.parse(IO_MAP["file"])
-mi_video = [x for x in mi.tracks if x.track_type == "Video"]
-if len(mi_video) > 0:
-	mi_video = mi_video[0]
-	if mi_video.original_frame_rate:
-		# has a modified frame rate, lets restore back to original
-		fps_fix_path = f"{IO_MAP['file']}.fpsfix.mkv"
-		original_fps = None
-		if mi_video.framerate_original_num and mi_video.framerate_original_den:
-			original_fps = f"{mi_video.framerate_original_num}/{mi_video.framerate_original_den}"
-		else:
-			original_fps = f"{mi_video.original_frame_rate}"
-		if not os.path.exists(fps_fix_path):
-			subprocess.check_output([
-				"mkvmerge","--output", fps_fix_path,
-				 "--default-duration", f"{mi_video.track_id-1}:{original_fps}fps",
-				IO_MAP["file"]
-			], cwd=os.path.dirname(IO_MAP["file"]))
-		IO_MAP["file"] = fps_fix_path
 # load file path with PSourcer
 psourcer = PSourcer(IO_MAP["file"], debug=DEBUG)
 sourcer = psourcer.sourcer
