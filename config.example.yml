@@ -1,6 +1,9 @@
 # Documentation on all values are available here:
 # https://rlaphoenix.github.io/VSMPEG
 
+# Make sure you copy or rename this file as config.yml for vsmpeg.vpy to be able
+# to find and use it. Enjoy :)
+
 Verbose: true
 Input: C:/Users/John/Videos/big-buck-bunny.mp4
 
