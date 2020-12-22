@@ -1,0 +1,83 @@
+# Documentation on all values are available here:
+# https://rlaphoenix.github.io/VSMPEG
+
+DEBUG: true
+Input: C:/Users/John/Videos/big-buck-bunny.mp4
+
+# >>> Scan
+
+Deinterlacers:
+  None: ~
+  havsfunc.QTGMC:
+    FPSDivisor: 2
+    Preset: Placebo
+    MatchPreset: Placebo
+    MatchPreset2: Placebo
+    InputType: 0
+    SourceMatch: 3
+    Lossless: 2
+    Sharpness: 0.2
+    ShutterBlur: 0
+    ShutterAngleSrc: 0
+    ShutterAngleOut: 0
+    SBlurLimit: 0
+  PDeinterlacer.VoidWeave:
+    bob: true
+Deinterlacer: havsfunc.QTGMC
+
+# >>> Frame-rate
+
+Decimation:
+  Cycle: 0  # 0 == disable decimation
+  Offsets: [0, 1, 3, 4]  # empty list == uses VDecimate (not recommended: git.io/avoid-tdecimate)
+  ResetCyclePerVobCell: True
+
+# >>> Color
+
+ChromaLocation: ~  # ~ = Don't override
+
+# >>> Resizing and Cropping
+
+Debox:
+  Enabled: false
+  Operations:
+    - ["w", "4:3", 0]
+    - ["h", "21:9", 0]
+
+Crop:
+  Enabled: false
+  Left: 0
+  Right: 0
+  Top: 0
+  Bottom: 0
+
+AspectRatio:
+  Value: DAR  # ~ to skip, DAR to use DAR from metadata, or e.g. 16:9 to force a specific aspect ratio
+  Axis: width  # which axis to resize to get the wanted aspect ratio, width, or height
+  Kernel: Spline64  # which function in core.resize do you want to use as a resize kernel?
+
+# >>> Machine Learning and Networks
+
+VSGAN:
+  Enabled: false
+  Comparer: Interleave  # ~ = Off, Interleave, StackHorizontal
+  ConvertToYUV: true  # RGB->YUV is lossy, if you need to use YUV right after this (e.g. for encoding), then do it, otherwise don't.
+  Operations:
+    - enabled: false
+      model: C:/Users/John/Documents/VSGAN/models/anime_upscaler/5000_G.pth
+      device: 1
+      chunk: false
+      presample: false
+      resample: 1080
+    - enabled: false
+      model: C:/Users/John/Documents/VSGAN/models/denoiser/2000_G.pth
+      device: 1
+      chunk: false
+      presample: 1080
+      resample: 1080
+    - enabled: true
+      model: C:/Users/John/Documents/VSGAN/models/inpainter/12000_G.pth
+      device: 1
+      chunk: false
+      presample: false
+      resample: false
