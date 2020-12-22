@@ -40,12 +40,13 @@ clip = psourcer.clip
 # >>> Scan
 
 # Deinterlace
-clip = PDeinterlacer(
-    clip,
-    kernel=eval(config["Deinterlacer"]),
-    kernel_args=config["Deinterlacers"][config["Deinterlacer"]],
-    debug=config["DEBUG"]
-).clip
+if config["Deinterlacer"]:
+    clip = PDeinterlacer(
+        clip,
+        kernel=eval(config["Deinterlacer"]),
+        kernel_args=config["Deinterlacers"][config["Deinterlacer"]],
+        debug=config["DEBUG"]
+    ).clip
 
 # >>> Frame-rate
 
