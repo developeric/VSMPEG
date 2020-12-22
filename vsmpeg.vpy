@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # vapoursynth
-from vapoursynth import core
+from vapoursynth import core, YUV
 # std
 import os
 import math
@@ -136,8 +136,6 @@ if config["VSGAN"]["Enabled"]:
                 width=resample * (clip.width / clip.height),
                 height=resample
             )
-    if config["VSGAN"]["ConvertToYUV"]:
-        clip = mvsfunc.ToYUV(clip, css="4:2:0", depth=clip.format.bits_per_sample)
     if config["VSGAN"]["Comparer"]:
         # match the res and format between the before clip and current clip
         if og.height != clip.height or og.width != clip.width:
@@ -149,5 +147,7 @@ if config["VSGAN"]["Enabled"]:
             core.text.Text(og, "Original"),
             core.text.Text(clip, "Result")
         ])
+    if config["VSGAN"]["ConvertToYUV"] and clip.format.color_family != YUV:
+        clip = mvsfunc.ToYUV(clip, css="4:2:0", depth=clip.format.bits_per_sample)
 
 clip.set_output()
