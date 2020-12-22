@@ -129,7 +129,17 @@ if config["VSGAN"]["Enabled"]:
                 width=presample * (clip.width / clip.height),
                 height=presample
             )
-        clip = vsgan_device.run(clip, chunk=chunk)
+        if config["Deinterlacer"] == "PDeinterlacer.VoidWeave":
+            clip = core.std.FrameEval(
+                clip,
+                functools.partial(
+                    lambda n, f, c: c if f.props["PVSFlagProgressiveFrame"] else vsgan_device.run(c, chunk=chunk),
+                    c=clip
+                ),
+                prop_src=clip
+            )
+        else:
+            clip = vsgan_device.run(clip, chunk=chunk)
         if resample:
             clip = core.resize.Spline36(
                 clip,
