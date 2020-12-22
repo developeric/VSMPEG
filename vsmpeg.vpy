@@ -49,8 +49,8 @@ clip = PDeinterlacer(
 
 # >>> Frame-rate
 
-# Decimate
-if config["Decimation"]["Cycle"] != 0:
+# Decimation
+if config["Decimation"]["Enabled"]:
     clip = PDecimate(
         clip=clip,
         per_vob_id=config["Decimation"]["ResetCyclePerVobCell"],

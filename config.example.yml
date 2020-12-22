@@ -28,7 +28,8 @@ Deinterlacer: havsfunc.QTGMC
 # >>> Frame-rate
 
 Decimation:
-  Cycle: 0  # 0 == disable decimation
+  Enabled: false
+  Cycle: 5
   Offsets: [0, 1, 3, 4]  # empty list == uses VDecimate (not recommended: git.io/avoid-tdecimate)
   ResetCyclePerVobCell: True
 
