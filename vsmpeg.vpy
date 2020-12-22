@@ -34,14 +34,19 @@ IO_MAP = {
     "file": "file:///run/media/phoenix/emby-4-sea/discs/dvd/Family Guy/USA NTSC DVD/Family.Guy.V01.USA.NTSC.4xDVD9.MPEG.DD.2.0-PHOENiX/Disc 1/VIDEO_TS/VTS_03_1.VOB",
     "scan": {
         "type": "progressive",  # output will always be progressive
-        "means": (
-            # function, and arguments, exclude `clip` argument
-            havsfunc.QTGMC, {
-                "FPSDivisor": 2,
+        "means": [
+            # """
+            # (function, enabled, function arguments)
+            # Exclude the `clip` and `tff` argument from the function arguments.
+            # Even though its excluded, the function needs to have a `tff` argument.
+            #
+            # Only the top-most enabled means will be used.
+            # """
+            (havsfunc.QTGMC, True, {
+                "FPSDivisor": 1,
                 "Preset": "Placebo",
                 "MatchPreset": "Placebo",
                 "MatchPreset2": "Placebo",
-                "TFF": True,  # fallback only, pdeinterlacer handles the decision making
                 "InputType": 0,
                 "SourceMatch": 3,
                 "Lossless": 2,
@@ -50,8 +55,11 @@ IO_MAP = {
                 "ShutterAngleSrc": 0,
                 "ShutterAngleOut": 0,
                 "SBlurLimit": 0
-            }
-        )
+            }),
+            (PDeinterlacer.VoidWeave, False, {
+                "bob": True
+            }),
+        ]
     },
     "resolution": {
         "width": 720,
@@ -70,12 +78,12 @@ IO_MAP = {
         "denominator": 1001,
         "means": {
             "split_per_vob_cell": True,  # reset cycle every time it enters a new vob cell (if using .VOB)
-            "SelectEvery": (5, [0, 1, 3, 4]),  # cycle (int), offsets (list<int>)
+            #"SelectEvery": (5, [0, 1, 3, 4]),  # cycle (int), offsets (list<int>)
             #"VDecimate": 5,  # args of VDecimate. (not recommended: git.io/avoid-tdecimate)
         }
     },
     "color": {
-        "chroma_location": 2,  # None=auto, 0=left, 1=center, 2=topleft, 3=top, 4=bottomleft, 5=bottom
+        "chroma_location": None,  # None=auto, 0=left, 1=center, 2=topleft, 3=top, 4=bottomleft, 5=bottom
     },
     "VSGAN": {
         # """
@@ -91,8 +99,8 @@ IO_MAP = {
         "output_yuv": True,  # Convert Result frame to YUV, recommended if encoding to video with FFMPEG, otherwise disable
         "executions": [
             {
-                "enabled": True,
-                "model": r"/home/phoenix/github/BasicSR-vic/experiments/adntsc2hd/models/300000_G.pth",
+                "enabled": False,
+                "model": r"/home/phoenix/Git/BasicSR-vic/experiments/adntsc2hd/models/300000_G.pth",
                 "device": 1,
                 "chunk": False,
                 "presample": False,
@@ -100,19 +108,19 @@ IO_MAP = {
             },
             {
                 "enabled": False,
-                "model": r"/home/phoenix/Downloads/2x_real_pokemodel_v2_final_G.pth",
-                "device": 1,
-                "chunk": False,
-                "presample": False,
-                "resample": 1080
-            },
-            {
-                "enabled": True,
-                "model": r"/home/phoenix/github/BasicSR-vic/experiments/pkmnbd2hd/models/140000_G.pth",
+                "model": r"/home/phoenix/Git/BasicSR-vic/experiments/pkmnbd2hd/models/140000_G.pth",
                 "device": 1,
                 "chunk": False,
                 "presample": 1080,
                 "resample": 1080
+            },
+            {
+                "enabled": True,
+                "model": r"/home/phoenix/Downloads/11000_G.pth",
+                "device": 1,
+                "chunk": False,
+                "presample": False,
+                "resample": False
             },
         ]
     }
@@ -149,7 +157,9 @@ clip = psourcer.clip
 
 # == Scan Stage ==
 # Deinterlace
-clip = PDeinterlacer(clip, *IO_MAP["scan"]["means"], debug=DEBUG).clip
+scan_means = [(func, args) for func,enabled,args in IO_MAP["scan"]["means"] if enabled]
+if scan_means:
+    clip = PDeinterlacer(clip, *scan_means[0], debug=DEBUG).clip
 
 # == FPS Stage ==
 # Decimate
