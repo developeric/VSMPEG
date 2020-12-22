@@ -111,7 +111,9 @@ VSGAN = {
     ]
 }
 
+"""
 # /!\ Do not edit beyond here unless you know what your doing /!\
+"""
 
 # load file path with PSourcer
 psourcer = PSourcer(Input, debug=DEBUG)
