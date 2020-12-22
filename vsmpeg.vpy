@@ -33,7 +33,7 @@ with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "config.yml"
     config = yaml.load(f, Loader=yaml.FullLoader)
 
 # load file path with PSourcer
-psourcer = PSourcer(config["Input"], debug=config["DEBUG"])
+psourcer = PSourcer(config["Input"], debug=config["Verbose"])
 sourcer = psourcer.sourcer
 clip = psourcer.clip
 
@@ -45,7 +45,7 @@ if config["Deinterlacer"]:
         clip,
         kernel=eval(config["Deinterlacer"]),
         kernel_args=config["Deinterlacers"][config["Deinterlacer"]],
-        debug=config["DEBUG"]
+        debug=config["Verbose"]
     ).clip
 
 # >>> Frame-rate
@@ -58,7 +58,7 @@ if config["Decimation"]["Enabled"]:
         mode={False: 0, True: 1}[len(config["Decimation"]["Offsets"]) == 0],
         cycle=config["Decimation"]["Cycle"],
         offsets=config["Decimation"]["Offsets"] or None,
-        debug=config["DEBUG"]
+        debug=config["Verbose"]
     ).clip
 
 # >>> Color

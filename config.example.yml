@@ -1,7 +1,7 @@
 # Documentation on all values are available here:
 # https://rlaphoenix.github.io/VSMPEG
 
-DEBUG: true
+Verbose: true
 Input: C:/Users/John/Videos/big-buck-bunny.mp4
 
 # >>> Scan
