@@ -118,10 +118,10 @@ if config["VSGAN"]["Enabled"]:
     from vsgan import VSGAN
     if config["VSGAN"]["Comparer"]:
         og = clip
-    for enabled, model, device, chunk, presample, resample in config["VSGAN"]["Operations"]:
+    for enabled, model, device, chunk, presample, resample in [x.values() for x in config["VSGAN"]["Operations"]]:
         if not enabled:
             continue
-        vsgan_device = VSGAN(model)
+        vsgan_device = VSGAN(device)
         vsgan_device.load_model(anti_file_prefix(model))
         if presample:
             clip = core.resize.Spline36(
