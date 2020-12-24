@@ -4,19 +4,15 @@ Follow instructions on the [README](https://github.com/rlaPHOENiX/VSMPEG/blob/ma
 
 # Usage
 
-The most convenient way to use *any* VapourSynth script right now is with [VapourSynth Editor (aka vsedit)](https://forum.doom9.org/showthread.php?t=170965).
+The most convenient way to use _any_ VapourSynth script right now is with [VapourSynth Editor (aka vs-edit)](https://forum.doom9.org/showthread.php?t=170965).
 
 Open it, drag and drop [vsmpeg.vpy](https://github.com/rlaPHOENiX/VSMPEG/blob/master/vsmpeg.vpy) into it's text editor window, and it will open. It will now open that file location from then on automatically.
 
-All the variables you see before this line:
-
-    # /!\ Do not edit beyond here unless you know what your doing /!\
-
-Can safely be edited as long as you read information next to that variable, and in this document below.
+Now, just copy config.example.yml as config.yml, and edit it to your liking. Further information on the config options are shown below.
 
 ## Previewing
 
-Once you have edited the variables to your liking, preview and check everything by pressing `[F5]` or clicking `Script`->`Preview`, in the menu bar.
+Using vs-edit, you can preview the output of your script like a basic video player. Simply press `[F5]` or clicking `Script`->`Preview` in the menu bar to open the Preview window.
 
 ## Encoding
 
@@ -24,29 +20,53 @@ You can encode by using `vspipe` through a Terminal/Command-Prompt/Powershell on
 
 Both `vspipe` and vs-edit's Encode window allows you to pipe the output of the script to any program at all you wish (as long as that program accepts piped input via stdin).
 
-Here's a quick example of encoding with ffmpeg:
+### With VSPipe
 
-Make sure you're script returns a YUV video, and that you set the `Header` dropdown to `Y4M` (yuv4mpeg), otherwise you will need to tell FFMPEG -f rawvideo and the -pix_fmt that the script is returning, making sure the -pix_fmt's channel count and channel order is correct.
+VSPipe is a command-line program allowing you to simply provide a path to a vapoursynth script file and pipe the output to any program that takes in frame data via stdin.
 
-For the Executable text field, give it the path to FFMPEG. In a setup where the ffmpeg executable is in your environment path variable, then you could simply put `ffmpeg` (the name of the executable, .exe isn't needed). If it's not in your path (I recommend doing so), otherwise just give it the full direct path to the ffmpeg.exe.
+Official Documentation is available here: https://www.vapoursynth.com/doc/vspipe.html
+
+An explanation of the -y/--y4m switch and how to use YUV/RGB is available under Header in the [With VapourSynth-Editor](#with-vapoursynth-editor) section.
+
+### With VapourSynth-Editor
+
+First thing's first, open the Encoding window by pressing `[F8]` or clicking `Script`->`Encode`, in the menu bar of vs-edit.
+
+#### Header
+
+first thing you need to pay attention to is the `Header` dropdown, right now it only has support for `Y4M` (YUV4MPEG). The header is data added to the start of all YUV frame data that allows programs like FFMPEG, x264, e.t.c to more easily understand the incoming data, and adjust itself as needed automatically. Essentially it tells programs what it is, and some metadata about each frame.
+
+If you select `Y4M`, then the script must return a video with a color space from the YUV color space family, e.g. YUV420P8, YUV444P12. If you wish to use another color family like RGB, e.g. RGB24, then you need to set the Header to `No header` and specifically tell the program the format of the incoming piped data.
+
+For example, for RGB24, you can tell FFMPEG `-f rawvideo -pix_fmt gbrp` _before_ `-i -`. However, for that to work you must swap the Planar channel order from R G B (0,1,2), to G B R (1,2,0), which can be done with `clip = core.std.ShufflePlanes(clip, planes=[1,2,0], colorfamily=vs.RGB)`. This is necessary because RGB24 (0,1,2 Planar Order) is not defined as any -pix_fmt by FFMPEG for whatever stupid reason that is. Ideally FFMPEG should be have a -pix_fmt named `rgbp` but it doesn't. But as I said, with a simple Planar re-order, it's possible. Finally I just want to make it clear that this is an FFMPEG problem, not a problem with VapourSynth or VapourSynth-editor.
+
+#### Executable
+
+For the Executable text field, give it the path to the program you wish to pipe data through stdin, e.g. FFMPEG. In a setup where the executable is in your environment path variable, then you could simply put the name of the executable without `.exe` at the end. If it's not in your path just give it the full direct path to the executable (with `.exe`!). I recommend taking the time to use an installer for the executable if available, or put the executable into `C:/Program Files/Program Name` for example, and adding it to your _System_ PATH variable for ease of use from now on. Without the executable in your PATH, it's a lot harder to use it in a terminal/command-prompt.
+
+#### Arguments
+
+Just like in a terminal/command-prompt, here's where you tell the program what you want it to do.
+VapourSynth-Editor allows you to add newlines for readability without affecting operation.
+
+Here's a basic example of FFMPEG usage, assuming Y4M header is used. Arguments taken from https://trac.ffmpeg.org/wiki/Encode/H.264
 
 In the Arguments text area:
 
     -i -
-    -preset medium
-    -profile high
-    -level 4.1
-    -refs 6
-    -crf 18
-    "out.mp4"
+    -c:v libx264
+    -preset slow
+    -crf 22
+    "C:/Users/John/Videos/VSMPEG-out.mp4"
 
-Give it a name in the Preset text field, and hit save to re-use it later.
+#### Presets
 
-Go ahead and click Start now :)
+You can now type a name in the "Preset" text field, then hit Save. You can save more pre-sets by simply changing the name in the text field and hitting save again. To edit an existing preset, just keep the name unchange (or use the dropdown to change to a different saved preset, if any), make your edits, and hit save. Pretty semantic if you ask me. You can also delete presets by clicking the Delete button with the unwanted preset selected.
 
 # Variable Documentation
 
 ## DEBUG
+
 ### bool
 
 This bool will tell various code functions in this script to print extra additional
@@ -59,17 +79,19 @@ using, and if that frame would be removed when DEBUG is set to False based on th
 cycle and offsets currently used. This can help you speed up your decimation.
 
 ## Input
+
 ### str
 
-Input the file you wish to load here. If you're on Windows, note that paths may use \
-instead of /. If the path has a \ rather than a /, put r before the start of the path,
-e.g. r"C:\path\to\the\file.mkv".
+Input the file you wish to load here. If you're on Windows, note that paths may use \\
+instead of /. If the path has a \\ rather than a /, put r before the start of the path,
+e.g. r"C:\\path\\to\\the\\file.mkv".
 
 Tip: Regardless of operating system, you can click a file, press CTRL+C (copy), then
 CTRL+V (paste) the file into the "..." string below. What will happen is it will paste
 the file path with a `file://` prefix. You don't need to remove the `file://` prefix.
 
 ## Deinterlacer
+
 ### <tuple>(function: func, arguments: dict)
 
 Only Frames marked as interlaced will run through the selected function.
@@ -84,12 +106,14 @@ Tip: Make sure any further required arguments for the function you provide is se
 or PDeinterlacer will fail to run the function.
 
 ## Decimation
+
 ### <tuple>(cycle: int, offsets: <list>[<int>])
 
 Note: To use VDecimate (not recommended: git.io/avoid-tdecimate), set the offsets to an
 empty list. When offsets are specified it will use SelectEvery.
 
 ## ResetCyclePerVobCell
+
 ### bool
 
 Reset the current cycle's offset back to 0 (the start) every time it enters a new vob
@@ -104,6 +128,7 @@ when they encoded it, or the content itself (e.g. animation) may just be like th
 for Fades, Pans & Scans, Transitions, and see if also occurs on those.
 
 ## ChromaLocation
+
 ### int or None
 
 Position matrix for the value of ChromaLocation:
@@ -136,7 +161,7 @@ trying to deinterlace a video and get it all good to go. That however doesn't me
 useful.
 
 More info:
-https://github.com/rlaPHOENiX/VSGAN
+<https://github.com/rlaPHOENiX/VSGAN>
 
 Note: VSGAN is applied after everything else. You're clip will be converted to RGB24, and will
 return as RGB24 unless you enable "output_yuv", which all it does is convert the RGB24 to YUV420P.
