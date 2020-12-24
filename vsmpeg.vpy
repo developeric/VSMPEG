@@ -105,13 +105,13 @@ if config["AspectRatio"]["Value"]:
     if ar:
         ar = [int(x) for x in ar.split(":")]
         axis = config["AspectRatio"]["Axis"].lower()
-        clip = eval("core.resize." + config["AspectRatio"]["Kernel"])(
-            clip=clip,
-            **{axis: {
-                "w": math.ceil(clip.height * (ar[0] / ar[1])),
-                "h": math.ceil(clip.width / (ar[0] / ar[1]))
-            }[axis[0]]}
-        )
+        w = math.ceil(clip.height * (ar[0] / ar[1]))
+        h = math.ceil(clip.width / (ar[0] / ar[1]))
+        if clip.width != w or clip.height != clip.height:
+            clip = eval("core.resize." + config["AspectRatio"]["Kernel"])(
+                clip=clip,
+                **{axis: {"w": w, "h": h}[axis[0]]}
+            )
 
 # >>> Machine Learning and Networks
 
