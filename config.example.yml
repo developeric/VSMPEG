@@ -10,6 +10,9 @@ Input: C:/Users/John/Videos/big-buck-bunny.mp4
 # >>> Scan
 
 Deinterlacers:
+  # These keys are function names, that will be derived from the imported object from it's
+  # Environment information. This allows VSMPEG to more safely import and use the configured
+  # deinterlacer functions.
   QTGMC:
     Environment:
       Import: havsfunc
@@ -27,7 +30,6 @@ Deinterlacers:
       ShutterAngleOut: 0
       SBlurLimit: 0
   VoidWeave:
-    # akin to `from pvsfunc.pdeinterlacer import PDeinterlacer` `PDeinterlacer.VoidWeave`
     Environment:
       From: pvsfunc.pdeinterlacer
       Import: PDeinterlacer
