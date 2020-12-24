@@ -63,7 +63,7 @@ In the Arguments text area:
 
 You can now type a name in the "Preset" text field, then hit Save. You can save more pre-sets by simply changing the name in the text field and hitting save again. To edit an existing preset, just keep the name unchange (or use the dropdown to change to a different saved preset, if any), make your edits, and hit save. Pretty semantic if you ask me. You can also delete presets by clicking the Delete button with the unwanted preset selected.
 
-# Variable Documentation
+# Variable Documentation (old, latest code may or may not use these)
 
 ## DEBUG
 
