@@ -24,7 +24,8 @@ with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "config.yml"
     config = yaml.load(f, Loader=yaml.FullLoader)
 
 # load file path with PSourcer
-psourcer = PSourcer(config["Input"], debug=config["Verbose"])
+Input = locals()["Input"].decode("utf-8") if "Input" in locals() else config["Input"]
+psourcer = PSourcer(Input, debug=config["Verbose"])
 sourcer = psourcer.sourcer
 clip = psourcer.clip
 
