@@ -10,7 +10,6 @@ from pvsfunc.pdebox import PDebox
 from pvsfunc.pdecimate import PDecimate
 from pvsfunc.pdeinterlacer import PDeinterlacer
 from pvsfunc.psourcer import PSourcer
-from pyd2v import D2V
 from vapoursynth import core, YUV
 
 """
@@ -43,7 +42,7 @@ if config["Deinterlacer"]:
 # Decimation
 if config["Decimation"]["Enabled"]:
     clip = PDecimate(
-        clip=clip,
+        clip,
         per_vob_id=config["Decimation"]["ResetCyclePerVobCell"],
         mode={False: 0, True: 1}[len(config["Decimation"]["Offsets"]) == 0],
         cycle=config["Decimation"]["Cycle"],
@@ -58,7 +57,7 @@ if type(config["ChromaLocation"]) is int:
     if config["ChromaLocation"] < 0 or config["ChromaLocation"] > 5:
         raise ValueError("ChromaLocation value is invalid. Must be an integer between 0..5")
     clip = core.resize.Point(
-        clip,
+        clip=clip,
         chromaloc=config["ChromaLocation"],
         chromaloc_in=clip.get_frame(0).props["_ChromaLocation"]
     )
@@ -83,12 +82,10 @@ if config["Crop"]["Enabled"]:
 if config["AspectRatio"]["Value"]:
     ar = config["AspectRatio"]["Value"]
     if ar == "DAR":
-        if sourcer == "core.d2v.Source":
-            d2v = D2V(clip.get_frame(0).props["PVSFilePath"])
-            ar = d2v.settings["Aspect_Ratio"]
-        else:
+        ar = {
+            "core.d2v.Source": psourcer.d2v.settings["Aspect_Ratio"],
             # todo ; needs support for other codecs, perhaps via pymediainfo?
-            ar = None
+        }.get(sourcer, None)
     if ar:
         ar = [int(x) for x in ar.split(":")]
         axis = config["AspectRatio"]["Axis"].lower()
