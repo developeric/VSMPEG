@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import functools
+import importlib
 import math
 import os
 
@@ -31,10 +32,23 @@ clip = psourcer.clip
 
 # Deinterlace
 if config["Deinterlacer"]:
+    deinterlacer = config["Deinterlacers"][config["Deinterlacer"]]
+    # get the deinterlacer function (and import stuff as needed) without using
+    # eval or exec. We want the user to be safe(r) I guess.
+    kernel = None
+    if "Environment" in deinterlacer:
+        environment = deinterlacer["Environment"]
+        if "From" in environment:
+            kernel = getattr(importlib.import_module(environment["From"]), environment["Import"])
+        elif "Import" in environment:
+            kernel = importlib.import_module(environment["Import"])
+    if kernel is None:
+        raise ValueError("VSMPEG: The environment configuration for the deinterlacer is missing or invalid.")
+    kernel = getattr(kernel, config["Deinterlacer"])
     clip = PDeinterlacer(
         clip,
-        kernel=eval(config["Deinterlacer"]),
-        kernel_args=config["Deinterlacers"][config["Deinterlacer"]],
+        kernel=kernel,
+        kernel_args=deinterlacer["Args"],
         debug=config["Verbose"]
     ).clip
 

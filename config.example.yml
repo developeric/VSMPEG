@@ -10,23 +10,31 @@ Input: C:/Users/John/Videos/big-buck-bunny.mp4
 # >>> Scan
 
 Deinterlacers:
-  havsfunc.QTGMC:
-    FPSDivisor: 2
-    Preset: Placebo
-    MatchPreset: Placebo
-    MatchPreset2: Placebo
-    InputType: 0
-    SourceMatch: 3
-    Lossless: 2
-    Sharpness: 0.2
-    ShutterBlur: 0
-    ShutterAngleSrc: 0
-    ShutterAngleOut: 0
-    SBlurLimit: 0
-  PDeinterlacer.VoidWeave:
-    color: [0, 255, 0]
-    bob: true
-Deinterlacer: havsfunc.QTGMC  # ~ = disable deinterlacing (are you sure though?)
+  QTGMC:
+    Environment:
+      Import: havsfunc
+    Args:
+      FPSDivisor: 2
+      Preset: Placebo
+      MatchPreset: Placebo
+      MatchPreset2: Placebo
+      InputType: 0
+      SourceMatch: 3
+      Lossless: 2
+      Sharpness: 0.2
+      ShutterBlur: 0
+      ShutterAngleSrc: 0
+      ShutterAngleOut: 0
+      SBlurLimit: 0
+  VoidWeave:
+    # akin to `from pvsfunc.pdeinterlacer import PDeinterlacer` `PDeinterlacer.VoidWeave`
+    Environment:
+      From: pvsfunc.pdeinterlacer
+      Import: PDeinterlacer
+    Args:
+      color: [0, 255, 0]
+      bob: false
+Deinterlacer: QTGMC  # ~ = disable deinterlacing (are you sure though?)
 
 # >>> Frame-rate
 
