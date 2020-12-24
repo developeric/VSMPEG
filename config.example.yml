@@ -24,6 +24,7 @@ Deinterlacers:
     ShutterAngleOut: 0
     SBlurLimit: 0
   PDeinterlacer.VoidWeave:
+    color: [0, 255, 0]
     bob: true
 Deinterlacer: havsfunc.QTGMC  # ~ = disable deinterlacing (are you sure though?)
 
