@@ -104,8 +104,9 @@ if config["VSGAN"]["Enabled"]:
     import mvsfunc
     from vsgan import VSGAN
 
+    before = None
     if config["VSGAN"]["Comparer"]:
-        og = clip
+        before = clip
     for enabled, model, device, chunk, presample, resample in [x.values() for x in config["VSGAN"]["Operations"]]:
         if not enabled:
             continue
@@ -136,13 +137,12 @@ if config["VSGAN"]["Enabled"]:
             )
     if config["VSGAN"]["Comparer"]:
         # match the res and format between the before clip and current clip
-        if og.height != clip.height or og.width != clip.width:
-            og = core.resize.Spline64(og, width=clip.width, height=clip.height)
-        if og.format.id != clip.format.id:
-            # assuming RGB24 as VSGAN returns an RGB24 clip, maybe check if RGB or YUV
-            og = mvsfunc.ToRGB(og, depth=clip.format.bits_per_sample)
-        clip = eval("core.std." + config["VSGAN"]["Comparer"])([
-            core.text.Text(og, "Original"),
+        if before.height != clip.height or before.width != clip.width:
+            before = core.resize.Spline64(before, width=clip.width, height=clip.height)
+        if before.format.id != clip.format.id:
+            before = core.resize.Point(before, format=clip.format.id)
+        clip = getattr(core.std, config["VSGAN"]["Comparer"])([
+            core.text.Text(before, "Original"),
             core.text.Text(clip, "Result")
         ])
     if config["VSGAN"]["ConvertToYUV"] and clip.format.color_family != YUV:
