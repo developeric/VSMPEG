@@ -1,31 +1,21 @@
 #!/usr/bin/env python3
 
-# vapoursynth
-from vapoursynth import core, YUV
-# std
-import os
-import math
 import functools
-import binascii
-import subprocess
-# pip packages
-from pvsfunc.psourcer import PSourcer
-from pvsfunc.pdeinterlacer import PDeinterlacer
+import math
+import os
+
+import yaml
+from pvsfunc.helpers import anti_file_prefix
 from pvsfunc.pdebox import PDebox
 from pvsfunc.pdecimate import PDecimate
-from pvsfunc.helpers import anti_file_prefix
+from pvsfunc.pdeinterlacer import PDeinterlacer
+from pvsfunc.psourcer import PSourcer
 from pyd2v import D2V
-import havsfunc
-import yaml
-
+from vapoursynth import core, YUV
 
 """
 Documentation and information:
 https://rlaphoenix.github.io/VSMPEG
-"""
-
-"""
-# /!\ Do not edit beyond here unless you know what your doing /!\
 """
 
 # get config from config.yml
@@ -87,7 +77,7 @@ if config["Debox"]["Enabled"]:
 
 # Crop
 if config["Crop"]["Enabled"]:
-    clip = core.std.Crop(clip, **{k.lower(): v for k,v in config["Crop"] if k != "Enabled"})
+    clip = core.std.Crop(clip, **{k.lower(): v for k, v in config["Crop"] if k != "Enabled"})
 
 # Aspect Ratio
 if config["AspectRatio"]["Value"]:
@@ -116,6 +106,7 @@ if config["AspectRatio"]["Value"]:
 if config["VSGAN"]["Enabled"]:
     import mvsfunc
     from vsgan import VSGAN
+
     if config["VSGAN"]["Comparer"]:
         og = clip
     for enabled, model, device, chunk, presample, resample in [x.values() for x in config["VSGAN"]["Operations"]]:
