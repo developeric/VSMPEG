@@ -4,13 +4,14 @@ import functools
 import math
 import os
 
+import vapoursynth as vs
 import yaml
 from pvsfunc.helpers import anti_file_prefix
 from pvsfunc.pdebox import PDebox
 from pvsfunc.pdecimate import PDecimate
 from pvsfunc.pdeinterlacer import PDeinterlacer
 from pvsfunc.psourcer import PSourcer
-from vapoursynth import core, YUV
+from vapoursynth import core
 
 """
 Documentation and information:
@@ -101,7 +102,6 @@ if config["AspectRatio"]["Value"]:
 
 # VSGAN
 if config["VSGAN"]["Enabled"]:
-    import mvsfunc
     from vsgan import VSGAN
 
     before = None
@@ -145,7 +145,8 @@ if config["VSGAN"]["Enabled"]:
             core.text.Text(before, "Original"),
             core.text.Text(clip, "Result")
         ])
-    if config["VSGAN"]["ConvertToYUV"] and clip.format.color_family != YUV:
-        clip = mvsfunc.ToYUV(clip, css="4:2:0", depth=clip.format.bits_per_sample)
+    if config["VSGAN"]["ConvertColorSpace"]["Enabled"]:
+        if clip.format.id != getattr(vs, config["VSGAN"]["ConvertColorSpace"]["Format"]):
+            clip = core.resize.Point(clip, format=config["VSGAN"]["ConvertColorSpace"]["Format"])
 
 clip.set_output()
