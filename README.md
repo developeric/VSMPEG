@@ -57,9 +57,9 @@ It's not GUI software rather a scripting framework for videos that uses the [Pyt
 
 VapourSynth Script files use the .vpy extension (revision on .py being the Python script extension).
 
-### Wait, No GUI?! That must be painful!
+### Wait, No GUI?
 
-For your typical YouTube video it's unconventional yes, but that isn't the goal of a project like this. A Script-based NLE is scripted to handle a specific use case, and be able to be utilised by other programs like GUI editors, video players, hardware players, and such.
+For your typical YouTube video editing, it's unconventional, yes, but that isn't the goal of a project like this. A Script-based NLE is scripted to handle a specific use case, and be able to be utilised by other programs like GUI editors, video players, hardware players, and such.
 
 You won't need you're YouTube video's edits to be reproducable automatically on other people's PC's, but an edit like filtering colors, stabilization algorithms, machine learning edits, deinterlacing, e.t.c would be. You can generally think of VapourSynth as a framework for plugin creation, though it's extremely versatile and portable and not locked to one program but can be used by any program (as long as it supports it).
 
