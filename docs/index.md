@@ -145,13 +145,14 @@ A wrong chroma location when viewing the image/video will cause the color to loo
 Tip: It's incredibly hard to notice a color bleed, and even harder on live-action content. Look for bright pink/purpleish colors, and blood-red, they tend to get compressed the most, and tend to mess up in terms of color bleed way easier than any other color, so its easier to notice.
 
 [Example](https://slow.pics/c/6W2HO16L) and it's problems:
- - Bad chroma location being used. It was encoded with a chroma location that differs to the most popular MPEG-2 recommendation of 0 (center left). Possibly encoded with a chroma location of 2 (top left).
- - Has a slight color droop in specific parts of the image, e.g. Lois's orange hair, Lois's red lips, The top of the door frame.
+
+-   Bad chroma location being used. It was encoded with a chroma location that differs to the most popular MPEG-2 recommendation of 0 (center left). Possibly encoded with a chroma location of 2 (top left).
+-   Has a slight color droop in specific parts of the image, e.g. Lois's orange hair, Lois's red lips, The top of the door frame.
 
 A TON more information on Chroma Location and Subsampling is available here:
 
-- http://avisynth.nl/index.php/Sampling#mpeg-1_versus_mpeg-2_sampling (goes in depth, and also links to sources of the information)
-- https://www.pcmag.com/encyclopedia/term/chroma-subsampling (visually shows the chroma location positioning for various YUV color space formats, but doesn't link to their sources)
+-   <http://avisynth.nl/index.php/Sampling#mpeg-1_versus_mpeg-2_sampling> (goes in depth, and also links to sources of the information)
+-   <https://www.pcmag.com/encyclopedia/term/chroma-subsampling> (visually shows the chroma location positioning for various YUV color space formats, but doesn't link to their sources)
 
 ## Debox (dict object)
 
@@ -185,9 +186,9 @@ How much to crop from that axis. It cannot be a float. The resulting crop may ne
 
 This is to define what Aspect Ratio you want to resize you're clip to.
 
-- `~` (None): keep it at whatever it loaded in with, as in, do nothing and skip.
-- `DAR`: Use the Display Aspect Ratio (what aspect ratio a Player software or Hardware would display it as).
-- e.g. `16:9` (Specific Aspect Ratio string): Use a specific Aspect Ratio.
+-   `~` (None): keep it at whatever it loaded in with, as in, do nothing and skip.
+-   `DAR`: Use the Display Aspect Ratio (what aspect ratio a Player software or Hardware would display it as).
+-   e.g. `16:9` (Specific Aspect Ratio string): Use a specific Aspect Ratio.
 
 ### Axis (str)
 
@@ -199,15 +200,15 @@ Which Resize Kernel to use for the resize process. This has to be a function rea
 
 Example's and the use case:
 
-- [Point](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation): aka Nearest neighbor or NN, is a simple linear algorithm that essentially duplicates pixels when needed to fit the size. This would be used for anything you want to keep pixelated, like old NES game screenshots or gameplay, Pixel-art, QR-codes, e.t.c. It's important however that the content you are resizing with Point is also pixelated still and not blurry (e.g. by being resized previously with another non-linear algorithm), or you may get odd results.
-- [Bilinear](https://en.wikipedia.org/wiki/Bilinear_interpolation) and [Bicubic](https://en.wikipedia.org/wiki/Bicubic_interpolation): These are non-linear interpolation algorithms that are much nicer to look at on anything that would be blurry or generally anything that isnt pixelated or animated. Bicubic tends to look sharper but may result in halo'ing/glow/ringing artifacts around edges.
-- [Lanczos](https://en.wikipedia.org/wiki/Lanczos_algorithm): This one is not recommended, it is known for creating sharper images than Bicubic, but is notorious for creating halo'ing/glow/ringing artifacts around edges. It's also common advice to not use this on anything that would be even a small bit noisy (either by compression, or by FILM grain).
-- [Spline16, 32, and 64](https://en.wikipedia.org/wiki/Spline_interpolation): These are non-linear cubic spline-based interpolation algorithms that is cubic like Bicubic, however, tries to be as sharp as possible, but with less halo'ing/glow/ringing artifacts. Each incrementation of the 16/32/64 are the "Taps", the higher the Taps count, the more accurate but slow and resource intensive it will be. It's essentially the benefits of Lanczos, with the artifact'ness level of Bicubic give or take.
+-   [Point](https://en.wikipedia.org/wiki/Nearest-neighbor_interpolation): aka Nearest neighbor or NN, is a simple linear algorithm that essentially duplicates pixels when needed to fit the size. This would be used for anything you want to keep pixelated, like old NES game screenshots or gameplay, Pixel-art, QR-codes, e.t.c. It's important however that the content you are resizing with Point is also pixelated still and not blurry (e.g. by being resized previously with another non-linear algorithm), or you may get odd results.
+-   [Bilinear](https://en.wikipedia.org/wiki/Bilinear_interpolation) and [Bicubic](https://en.wikipedia.org/wiki/Bicubic_interpolation): These are non-linear interpolation algorithms that are much nicer to look at on anything that would be blurry or generally anything that isnt pixelated or animated. Bicubic tends to look sharper but may result in halo'ing/glow/ringing artifacts around edges.
+-   [Lanczos](https://en.wikipedia.org/wiki/Lanczos_algorithm): This one is not recommended, it is known for creating sharper images than Bicubic, but is notorious for creating halo'ing/glow/ringing artifacts around edges. It's also common advice to not use this on anything that would be even a small bit noisy (either by compression, or by FILM grain).
+-   [Spline16, 32, and 64](https://en.wikipedia.org/wiki/Spline_interpolation): These are non-linear cubic spline-based interpolation algorithms that is cubic like Bicubic, however, tries to be as sharp as possible, but with less halo'ing/glow/ringing artifacts. Each incrementation of the 16/32/64 are the "Taps", the higher the Taps count, the more accurate but slow and resource intensive it will be. It's essentially the benefits of Lanczos, with the artifact'ness level of Bicubic give or take.
 
 More algorithm's and information:
 
-- https://www.vapoursynth.com/doc/functions/resize.html
-- http://avisynth.nl/index.php/Resize
+-   <https://www.vapoursynth.com/doc/functions/resize.html>
+-   <http://avisynth.nl/index.php/Resize>
 
 ## VSGAN (dict object)
 
@@ -234,8 +235,8 @@ You can use functions to compare the before and after of VSGAN. It must be a fun
 
 Regardless, there's really only two that matter:
 
-- [Interleave](https://vapoursynth.com/doc/functions/interleave.html): Will alternate between Before and After.
-- [StackHorizontal](https://vapoursynth.com/doc/functions/stack.html): Will show the Before on the left and After on the right, both at the same time in the same frame. The smallest resolution of the two will be resized to the biggest for the fairest comparison. There's also StackVertical but what kind of psychopath would use that for comparing.
+-   [Interleave](https://vapoursynth.com/doc/functions/interleave.html): Will alternate between Before and After.
+-   [StackHorizontal](https://vapoursynth.com/doc/functions/stack.html): Will show the Before on the left and After on the right, both at the same time in the same frame. The smallest resolution of the two will be resized to the biggest for the fairest comparison. There's also StackVertical but what kind of psychopath would use that for comparing.
 
 ### ConvertColorSpace (dict object)
 
@@ -247,7 +248,7 @@ Wheter to convert the color space or leave it as RGB24. Since VSGAN HAS to conve
 
 #### Format (str)
 
-This should be any of the following values: https://vapoursynth.com/doc/pythonreference.html#format-constants
+This should be any of the following values: <https://vapoursynth.com/doc/pythonreference.html#format-constants>
 Just note, only YUV420P8 has really been tested. It's incredibly difficult to know how you wish to convert the color format just by which color format you want, there's lots more that is usually invovled especially for YUV, like Chroma Subsampling, Matrix, e.t.c. Everything like that is going to be assumed and estimated based on the input clip. So be warned. Feel free to look at the code (near the very end of the VSGAN related code in vsmpeg.vpy to see how it's doing it, and if needed, contribute any fixes or estimation improvements).
 
 ### Operations (List[dict])
@@ -267,9 +268,9 @@ Same possibilites as `Input`. This should be a path to a .pth model file that wa
 
 PyTorch device string, there's many possibilities for values here but typical values are `cpu`, `cuda`, `0`, `1`, e.t.c.
 
-- `cpu`: Use the CPU, do not do this for VSGAN! Even on amazing CPU's you are going to bottlekneck your entire system clock and straight up freeze your system to death. Even if you wait for it to finish, it will take literal hours for a single 480p frame. It's simply not feasible to do ESRGAN (regardless of VSGAN or not) via CPU.
-- `cuda`: This is a generic device that refers to any available cuda-capable GPU. For VSGAN to work with a GPU, it needs to support cuda, so make sure you install the NVIDIA CUDA Drivers, and yes this does mean AMD GPU's are unsupported, scream at pytorch for support, not me.
-- `0`, `1`, ...: Device ID by #. This generally refers to GPU #'s. e.g. in my system I have a 1080ti and a 2080ti, 0 refers to my 2080ti (which is my display output) and 1 refers to my 1080ti.
+-   `cpu`: Use the CPU, do not do this for VSGAN! Even on amazing CPU's you are going to bottlekneck your entire system clock and straight up freeze your system to death. Even if you wait for it to finish, it will take literal hours for a single 480p frame. It's simply not feasible to do ESRGAN (regardless of VSGAN or not) via CPU.
+-   `cuda`: This is a generic device that refers to any available cuda-capable GPU. For VSGAN to work with a GPU, it needs to support cuda, so make sure you install the NVIDIA CUDA Drivers, and yes this does mean AMD GPU's are unsupported, scream at pytorch for support, not me.
+-   `0`, `1`, ...: Device ID by #. This generally refers to GPU #'s. e.g. in my system I have a 1080ti and a 2080ti, 0 refers to my 2080ti (which is my display output) and 1 refers to my 1080ti.
 
 If you want to get you're GPU's `#` (e.g. `0`, `1`, ...) then you can do so by opening a terminal/cmd/powershell after installing all the dependencies of VSGAN, and running `python` to get into a python shell. Now run the following python code:
 
@@ -283,11 +284,9 @@ for n in range(torch.cuda.device_count()):
 
 This should return for example:
 
-```
-Is CUDA working and available? True
-Device: 0 is your: GeForce RTX 2080 Ti
-Device: 1 is your: GeForce GTX 1080 Ti
-```
+    Is CUDA working and available? True
+    Device: 0 is your: GeForce RTX 2080 Ti
+    Device: 1 is your: GeForce GTX 1080 Ti
 
 #### chunk (bool)
 
