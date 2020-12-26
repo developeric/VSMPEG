@@ -2,6 +2,12 @@
 
 VapourSynth script to automatically handle fields of an MPEG video file to return a Progressive CFR video stream.
 
+[![Python Version](https://img.shields.io/badge/python-3.6%2B-informational?style=flat)](https://python.org)
+[![License](https://img.shields.io/github/license/rlaPHOENiX/VSMPEG?style=flat)](https://github.com/rlaPHOENiX/VSMPEG/blob/master/LICENSE)
+[![Codacy](https://app.codacy.com/project/badge/Grade/82e2d74e4bdb4f32a98345a114bbb75f)](https://codacy.com/gh/rlaPHOENiX/VSMPEG/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rlaPHOENiX/VSMPEG&amp;utm_campaign=Badge_Grade)
+[![Issues](https://img.shields.io/github/issues/rlaPHOENiX/pvsfunc?style=flat)](https://github.com/rlaPHOENiX/VSMPEG/issues)
+[![PR's Accepted](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://makeapullrequest.com)
+
 ## What is VapourSynth and what is a VapourSynth Script (.vpy)
 
 "A video processing framework with simplicity in mind"—[VapourSynth Project](https://github.com/vapoursynth/vapoursynth)
