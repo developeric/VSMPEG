@@ -33,10 +33,10 @@ clip = psourcer.clip
 
 # Deinterlace
 if config["Deinterlacer"]:
-    deinterlacer = config["Deinterlacers"][config["Deinterlacer"]]
     # get the deinterlacer function (and import stuff as needed) without using
     # eval or exec. We want the user to be safe(r) I guess.
     kernel = None
+    deinterlacer = config["Deinterlacers"][config["Deinterlacer"]]
     if "Environment" in deinterlacer:
         environment = deinterlacer["Environment"]
         if "From" in environment:
@@ -45,10 +45,11 @@ if config["Deinterlacer"]:
             kernel = importlib.import_module(environment["Import"])
     if kernel is None:
         raise ValueError("VSMPEG: The environment configuration for the deinterlacer is missing or invalid.")
-    kernel = getattr(kernel, config["Deinterlacer"])
+    config["Deinterlacer"] = getattr(kernel, config["Deinterlacer"])
+    # send the deinterlacer function to PDeinterlacer
     clip = PDeinterlacer(
         clip,
-        kernel=kernel,
+        kernel=config["Deinterlacer"],
         kernel_args=deinterlacer["Args"],
         debug=config["Verbose"]
     ).clip
@@ -135,7 +136,7 @@ if config["VSGAN"]["Enabled"]:
                 width=presample * (clip.width / clip.height),
                 height=presample
             )
-        if config["Deinterlacer"] == "PDeinterlacer.VoidWeave":
+        if config["Deinterlacer"] == PDeinterlacer.VoidWeave:
             clip = core.std.FrameEval(
                 clip,
                 functools.partial(
