@@ -47,27 +47,9 @@ Go to the Dependencies section of `pvsfunc`'s README and read what is needed for
 
 * * *
 
-## Brief Introduction to VapourSynth and VapourSynth Script (.vpy) files
-
-"A video processing framework with simplicity in mind"—[VapourSynth Project](https://github.com/vapoursynth/vapoursynth)
-
-To add more to that, it's a _Script-based_ NLE ([Non-linear editing system](https://wikipedia.org/wiki/Non-linear_editing_system)).
-
-It's not GUI software rather a scripting framework for videos that uses the [Python programming language](https://wikipedia.org/wiki/Python_(programming_language)).
-
-VapourSynth Script files use the .vpy extension (revision on .py being the Python script extension).
-
-### Why Script-based editor's are a thing, when conventional GUI editors exist
-
-For your typical YouTube video editing, it's unconventional, yes, but that isn't the goal of a project like this. A Script-based NLE is scripted to handle a specific use case, and be able to be utilised by other programs like GUI editors, video players, hardware players, and such.
-
-You won't need you're YouTube video's edits to be reproducable automatically on other people's PC's, but an edit like filtering colors, stabilization algorithms, machine learning edits, deinterlacing, e.t.c would be. You can generally think of VapourSynth as a framework for plugin creation, though it's extremely versatile and portable and not locked to one program but can be used by any program (as long as it supports it).
-
-This project (VSMPEG) is a great example of a use-case of VapourSynth as it deals with the shenanigans of MPEG video entirely automated (depending on the optional stuff you enable/want to do). This script isn't realtime right now, even on high-end hardware, however, if it becomes the case of the deinterlacing algorithms to shrink in processing time or hardware to improve, this script could be used in realtime as sort of an intermediate layer or plugin to automatically handle DVD playback automatically without any configuration by the user. That would be awesome.
-
-* * *
-
 ## Usage
+
+This is a brief explanation of usage of VSMPEG, more verbose information and other ways of using VSMPEG can be found on the documentation below.
 
 ### With VapourSynth-Editor (aka vs-edit)
 
@@ -86,3 +68,29 @@ You can edit vsmpeg.vpy from here to do whatever you wish, but do remember that 
 For configuring the pre-made code in a noob-proof way, copy the config.example.yml as config.yml, open it in a YAML syntax supported editor (Visual Studio Code, notepad++, e.t.c), and edit away the options. The config.yml has more information on how to configure and what the options are and do.
 
 From here, feel free to use the full feature set of VapourSynth-Editor, like the Previewing (`F5`), Benchmarking (`F7`), and Encoding (`F8`) features.
+
+* * *
+
+## Documentation
+
+You can view the documentation on <https://rlaphoenix.github.io/VSMPEG> or <https://github.com/rlaPHOENiX/VSMPEG/blob/master/docs/index.md>
+
+* * *
+
+## Introduction to VapourSynth and VapourSynth Script (.vpy) files
+
+"A video processing framework with simplicity in mind"—[VapourSynth Project](https://github.com/vapoursynth/vapoursynth)
+
+To add more to that, it's a _Script-based_ NLE ([Non-linear editing system](https://wikipedia.org/wiki/Non-linear_editing_system)).
+
+It's not GUI software rather a scripting framework for videos that uses the [Python programming language](https://wikipedia.org/wiki/Python_(programming_language)).
+
+VapourSynth Script files use the .vpy extension (revision on .py being the Python script extension).
+
+### Why Script-based editor's are a thing, when conventional GUI editors exist
+
+For your typical YouTube video editing, it's unconventional, yes, but that isn't the goal of a project like this. A Script-based NLE is scripted to handle a specific use case, and be able to be utilised by other programs like GUI editors, video players, hardware players, and such.
+
+You won't need you're YouTube video's edits to be reproducable automatically on other people's PC's, but an edit like filtering colors, stabilization algorithms, machine learning edits, deinterlacing, e.t.c would be. You can generally think of VapourSynth as a framework for plugin creation, though it's extremely versatile and portable and not locked to one program but can be used by any program (as long as it supports it).
+
+This project (VSMPEG) is a great example of a use-case of VapourSynth as it deals with the shenanigans of MPEG video entirely automated (depending on the optional stuff you enable/want to do). This script isn't realtime right now, even on high-end hardware, however, if it becomes the case of the deinterlacing algorithms to shrink in processing time or hardware to improve, this script could be used in realtime as sort of an intermediate layer or plugin to automatically handle DVD playback automatically without any configuration by the user. That would be awesome.
