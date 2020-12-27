@@ -28,10 +28,10 @@ Install dependencies in the listed order:
 
 ### Installing Python and VapourSynth
 
-1.  Ensure the Python version you have installed (or are going to install) is supported by the version of VapourSynth you are installing. The supported Python versions in correlation to a VapourSynth version may differ per OS, noticeably on Windows, due to it's Python environment in general.
-2.  When installing Python and VapourSynth, you will be given the option to "Install for all users" by both. Make sure you're chosen answer matches for both installations or VapourSynth and Python wont be able to find each other.
+1.  Ensure the Python version you have installed (or are going to install) is supported by the version of VapourSynth you are installing. The supported Python versions in correlation to a VapourSynth version may differ per OS, noticeably on Windows due to it's Python environment in general.
+2.  When installing Python and VapourSynth, you will be given the option to "Install for all users" by both. Make sure your chosen answer matches for both installations or VapourSynth and Python wont be able to find each other.
 
-Important note for Windows users: It is very important for you to tick the checkbox "Add Python X.X to PATH" while installing. The Python installer's checkbox that states "Install launcher for all users", is not referring to the Python binaries. To install for all users, you must click "Customize installation" and in there, after "Optional Features" section, it will have a checkbox titled "Install for all users" unticked by default, tick it.
+Important note for Windows users: It is very important for you to tick the checkbox "Add Python X.X to PATH" while installing. The Python installer's checkbox that states "Install launcher for all users" is not referring to the Python binaries. To install for all users you must click "Customize installation" and in there, after "Optional Features" section, it will have a checkbox titled "Install for all users" unticked by default so tick it.
 
 ### Installing the required pip packages
 
