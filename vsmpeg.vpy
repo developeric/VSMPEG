@@ -33,6 +33,18 @@ psourcer = PSourcer(Input, debug=config["Verbose"])
 sourcer = psourcer.sourcer
 clip = psourcer.clip
 
+# >>> Color
+
+# Chroma location
+if type(config["ChromaLocation"]) is int:
+    if config["ChromaLocation"] < 0 or config["ChromaLocation"] > 5:
+        raise ValueError("ChromaLocation value is invalid. Must be an integer between 0..5")
+    clip = core.resize.Point(
+        clip=clip,
+        chromaloc=config["ChromaLocation"],
+        chromaloc_in=clip.get_frame(0).props["_ChromaLocation"]
+    )
+
 # >>> Scan
 
 # Deinterlace
@@ -70,18 +82,6 @@ if config["Decimation"]["Enabled"]:
         offsets=config["Decimation"]["Offsets"] or None,
         debug=config["Verbose"]
     ).clip
-
-# >>> Color
-
-# Chroma location
-if type(config["ChromaLocation"]) is int:
-    if config["ChromaLocation"] < 0 or config["ChromaLocation"] > 5:
-        raise ValueError("ChromaLocation value is invalid. Must be an integer between 0..5")
-    clip = core.resize.Point(
-        clip=clip,
-        chromaloc=config["ChromaLocation"],
-        chromaloc_in=clip.get_frame(0).props["_ChromaLocation"]
-    )
 
 # >>> Resizing and Cropping
 

@@ -7,6 +7,10 @@
 Verbose: true
 Input: C:/Users/John/Videos/big-buck-bunny.mp4
 
+# >>> Color
+
+ChromaLocation: ~  # ~ = Don't override
+
 # >>> Scan
 
 Deinterlacers:
@@ -45,10 +49,6 @@ Decimation:
   Cycle: 5
   Offsets: [0, 1, 3, 4]  # empty list == uses VDecimate (not recommended: git.io/avoid-tdecimate)
   ResetCyclePerVobCell: True
-
-# >>> Color
-
-ChromaLocation: ~  # ~ = Don't override
 
 # >>> Resizing and Cropping
 
