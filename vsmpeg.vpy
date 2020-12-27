@@ -122,14 +122,14 @@ if config["AspectRatio"]["Value"]:
 if config["VSGAN"]["Enabled"]:
     from vsgan import VSGAN
 
-    before = None
-    if config["VSGAN"]["Comparer"]:
-        before = clip
+    before = clip if config["VSGAN"]["Comparer"] else None
+    instances = {}
     for enabled, model, device, chunk, presample, resample in [x.values() for x in config["VSGAN"]["Operations"]]:
         if not enabled:
             continue
-        vsgan_device = VSGAN(device)
-        vsgan_device.load_model(anti_file_prefix(model))
+        if device not in instances:
+            instances[device] = VSGAN(device)
+        instances[device].load_model(anti_file_prefix(model))
         if presample:
             clip = core.resize.Spline36(
                 clip,
@@ -140,13 +140,13 @@ if config["VSGAN"]["Enabled"]:
             clip = core.std.FrameEval(
                 clip,
                 functools.partial(
-                    lambda n, f, c: c if f.props["PVSFlagProgressiveFrame"] else vsgan_device.run(c, chunk=chunk),
+                    lambda n, f, c: c if f.props["PVSFlagProgressiveFrame"] else instances[device].run(c, chunk=chunk),
                     c=clip
                 ),
                 prop_src=clip
             )
         else:
-            clip = vsgan_device.run(clip, chunk=chunk)
+            clip = instances[device].run(clip, chunk=chunk)
         if resample:
             clip = core.resize.Spline36(
                 clip,
