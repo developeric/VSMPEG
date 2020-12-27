@@ -105,10 +105,11 @@ if config["Crop"]["Enabled"]:
 if config["AspectRatio"]["Value"]:
     ar = config["AspectRatio"]["Value"]
     if ar == "DAR":
-        ar = {
-            "core.d2v.Source": psourcer.d2v.settings["Aspect_Ratio"],
-            # todo ; needs support for other codecs, perhaps via pymediainfo?
-        }.get(sourcer, None)
+        # todo ; needs support for other codecs, perhaps via pymediainfo?
+        if sourcer == "core.d2v.Source":
+            ar = psourcer.d2v.settings["Aspect_Ratio"]
+        else:
+            ar = None
     if ar:
         ar = [int(x) for x in ar.split(":")]
         axis = config["AspectRatio"]["Axis"].lower()
