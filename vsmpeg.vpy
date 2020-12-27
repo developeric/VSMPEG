@@ -148,6 +148,7 @@ if config["VSGAN"]["Enabled"]:
                 width=presample * (clip.width / clip.height),
                 height=presample
             )
+        clip = core.resize.Spline64(clip, format=vs.RGB24)
         if config["Deinterlacer"] == PDeinterlacer.VoidWeave:
             clip = core.std.FrameEval(
                 clip,
