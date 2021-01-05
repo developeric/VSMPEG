@@ -84,7 +84,7 @@ if config["Decimation"]["Enabled"]:
 # >>> Resizing and Cropping
 
 # Debox
-if config["Debox"]["Enabled"]:
+if config["Debox"]["Enabled"] and config["Debox"]["Operations"]:
     for mode, aspect, offset in config["Debox"]["Operations"]:
         clip = PDebox(
             clip,
