@@ -27,6 +27,9 @@ VSGAN_MIN_VER = 121
 with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "config.yml")) as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
 
+# Cache Size
+core.max_cache_size = config["MaxCacheSize"]
+
 # load file path with PSourcer
 Input = locals()["Input"].decode("utf-8") if "Input" in locals() else config["Input"]
 psourcer = PSourcer(Input, debug=config["Verbose"])

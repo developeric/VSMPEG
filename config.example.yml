@@ -6,6 +6,7 @@
 
 Verbose: true
 Input: C:/Users/John/Videos/big-buck-bunny.mp4
+MaxCacheSize: ~  # ~ = don't override, value in megabytes, e.g. 32GB: 32768
 
 # >>> Color
 
