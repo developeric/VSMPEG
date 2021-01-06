@@ -8,11 +8,8 @@ import os
 import pkg_resources
 import vapoursynth as vs
 import yaml
+from pvsfunc import PSourcer, PDeinterlacer, PDecimate, PDebox
 from pvsfunc.helpers import anti_file_prefix
-from pvsfunc.pdebox import PDebox
-from pvsfunc.pdecimate import PDecimate
-from pvsfunc.pdeinterlacer import PDeinterlacer
-from pvsfunc.psourcer import PSourcer
 from vapoursynth import core
 
 """
