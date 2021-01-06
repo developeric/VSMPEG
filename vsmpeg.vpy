@@ -28,7 +28,8 @@ with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "config.yml"
     config = yaml.load(f, Loader=yaml.FullLoader)
 
 # Cache Size
-core.max_cache_size = config["MaxCacheSize"]
+if config["MaxCacheSize"]:
+    core.max_cache_size = config["MaxCacheSize"]
 
 # load file path with PSourcer
 Input = locals()["Input"].decode("utf-8") if "Input" in locals() else config["Input"]
