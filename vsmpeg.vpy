@@ -32,7 +32,12 @@ if config["MaxCacheSize"]:
     core.max_cache_size = config["MaxCacheSize"]
 
 # load file path with PSourcer
-Input = locals()["Input"].decode("utf-8") if "Input" in locals() else config["Input"]
+if "video_in" in locals():  # MPV
+    Input = locals()["video_in"]
+elif "Input" in locals():   # VSPIPE
+    Input = locals()["Input"].decode("utf-8")
+else:
+    Input = config["Input"]
 psourcer = PSourcer(Input, debug=config["Verbose"])
 sourcer = psourcer.sourcer
 clip = psourcer.clip
