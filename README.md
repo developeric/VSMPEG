@@ -94,3 +94,13 @@ For your typical YouTube video editing, it's unconventional, yes, but that isn't
 You won't need you're YouTube video's edits to be reproducable automatically on other people's PC's, but an edit like filtering colors, stabilization algorithms, machine learning edits, deinterlacing, e.t.c would be. You can generally think of VapourSynth as a framework for plugin creation, though it's extremely versatile and portable and not locked to one program but can be used by any program (as long as it supports it).
 
 This project (VSMPEG) is a great example of a use-case of VapourSynth as it deals with the shenanigans of MPEG video entirely automated (depending on the optional stuff you enable/want to do). This script isn't realtime right now, even on high-end hardware, however, if it becomes the case of the deinterlacing algorithms to shrink in processing time or hardware to improve, this script could be used in realtime as sort of an intermediate layer or plugin to automatically handle DVD playback automatically without any configuration by the user. That would be awesome.
+
+* * *
+
+## Troubleshooting
+
+### Failed to initialize VapourSynth environment!
+
+The application you are using (e.g. VapourSynth Editor/vs-edit, vs-pipe) cannot find the VapourSynth library. Either you have only installed via `pip install vapoursynth` or have installed VapourSynth under a different Python version or Environment.
+
+Fix: Follow ["Installing Python and VapourSynth"](#installing-python-and-vapoursynth). You _might_ need to fully uninstall the current Python and VapourSynth installation.
