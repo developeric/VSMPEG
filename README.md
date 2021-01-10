@@ -4,7 +4,7 @@ VapourSynth script to automatically handle fields of an MPEG video file to retur
 
 [![Python Version](https://img.shields.io/badge/python-3.6%2B-informational?style=flat)](https://python.org)
 [![License](https://img.shields.io/github/license/rlaPHOENiX/VSMPEG?style=flat)](https://github.com/rlaPHOENiX/VSMPEG/blob/master/LICENSE)
-[![Codacy](https://app.codacy.com/project/badge/Grade/82e2d74e4bdb4f32a98345a114bbb75f)](https://codacy.com/gh/rlaPHOENiX/VSMPEG/dashboard?utm_source=github.com&utm_medium=referral&utm_content=rlaPHOENiX/VSMPEG&utm_campaign=Badge_Grade)
+[![DeepSource](https://deepsource.io/gh/rlaPHOENiX/VSMPEG.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/rlaPHOENiX/VSMPEG/?ref=repository-badge)
 [![Issues](https://img.shields.io/github/issues/rlaPHOENiX/pvsfunc?style=flat)](https://github.com/rlaPHOENiX/VSMPEG/issues)
 [![PR's Accepted](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://makeapullrequest.com)
 
