@@ -132,7 +132,7 @@ if config["VSGAN"]["Enabled"]:
     try:
         if int(pkg_resources.get_distribution("vsgan").version.replace(".", "")) < VSGAN_MIN_VER:
             raise EnvironmentError(
-                f"VSMPEG: Your VSGAN installation is too old. Update with `pip install --upgrade vsgan`")
+                "VSMPEG: Your VSGAN installation is too old. Update with `pip install --upgrade vsgan`")
     except pkg_resources.DistributionNotFound:
         raise EnvironmentError("VSMPEG: VSGAN needs to be installed, https://rlaphoenix.github.io/VSMPEG")
     from vsgan import VSGAN
