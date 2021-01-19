@@ -139,39 +139,41 @@ if config["VSGAN"]["Enabled"]:
 
     before = clip if config["VSGAN"]["Comparer"] else None
     instances = {}
-    for enabled, model, device, chunk, presample, resample in [x.values() for x in config["VSGAN"]["Operations"]]:
-        if not enabled:
+    for operation in config["VSGAN"]["Operations"]:
+        if not operation["enabled"]:
             continue
-        if device not in instances:
-            instances[device] = VSGAN(device)
-        model = anti_file_prefix(model)
-        if instances[device].model != model:
-            instances[device].load_model(model)
-        if presample:
+        if operation["device"] not in instances:
+            instances[operation["device"]] = VSGAN(operation["device"])
+        model = anti_file_prefix(operation["model"])
+        if instances[operation["device"]].model != model:
+            instances[operation["device"]].load_model(model)
+        if operation.get("presample"):
             clip = core.resize.Spline36(
                 clip,
-                width=presample * (clip.width / clip.height),
-                height=presample
+                width=operation["presample"] * (clip.width / clip.height),
+                height=operation["presample"]
             )
         clip = core.resize.Spline64(clip, format=vs.RGB24)
-        if config["Deinterlacer"] == PDeinterlacer.VoidWeave:
+        if operation.get("skip_progressive"):
             clip = core.std.FrameEval(
                 clip,
                 functools.partial(
-                    lambda n, f, c: c if f.props["PVSFlagProgressiveFrame"] else instances[device].run(c, chunk=chunk),
+                    lambda n, f, c: c if f.props["PVSFlagProgressiveFrame"] else instances[operation["device"]].run(
+                        c, chunk=operation.get("chunk", False)
+                    ),
                     c=clip
                 ),
                 prop_src=clip
             )
         else:
-            clip = instances[device].run(clip, chunk=chunk)
-        if resample:
+            clip = instances[operation["device"]].run(clip, chunk=operation.get("chunk", False))
+        if operation.get("resample"):
             clip = core.resize.Spline36(
                 clip,
-                width=resample * (clip.width / clip.height),
-                height=resample
+                width=operation["resample"] * (clip.width / clip.height),
+                height=operation["resample"]
             )
-    if config["VSGAN"]["Comparer"]:
+    if config["VSGAN"].get("Comparer"):
         # match the res and format between the before clip and current clip
         if before.height != clip.height or before.width != clip.width:
             before = core.resize.Spline64(before, width=clip.width, height=clip.height)
