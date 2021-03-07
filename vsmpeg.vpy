@@ -101,9 +101,8 @@ if config["Debox"]["Enabled"] and config["Debox"]["Operations"]:
 
 # Crop
 if config["Crop"]["Enabled"]:
-    crop_values = {k.lower(): v for k, v in config["Crop"] if k != "Enabled"}
-    if sum(*crop_values.values()) != 0:
-        clip = core.std.Crop(clip, **crop_values)
+    crop_values = {k.lower(): v for k, v in config["Crop"].items() if k != "Enabled"}
+    clip = core.std.Crop(clip, **crop_values)
 
 # Aspect Ratio
 if config["AspectRatio"]["Value"]:
