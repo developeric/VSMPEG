@@ -4,7 +4,7 @@ VapourSynth script to automatically handle fields of an MPEG video file to retur
 While commonly referred to as a deinterlacer, it itself is not a deinterlacer. It is more of a boiler template for
 [pvsfunc], which it itself is more of a wrapper for various purposes.
 
-[![Build Tests](https://img.shields.io/github/workflow/status/rlaPHOENiX/VSMPEG/Version%20test?label=Python%203.5%2B%20builds)](https://github.com/rlaPHOENiX/VSMPEG/actions?query=workflow%3A%22Version+test%22)
+[![Build Tests](https://img.shields.io/github/workflow/status/rlaPHOENiX/VSMPEG/Version%20test?label=Python%203.6%2B%20builds)](https://github.com/rlaPHOENiX/VSMPEG/actions?query=workflow%3A%22Version+test%22)
 [![License](https://img.shields.io/github/license/rlaPHOENiX/VSMPEG?style=flat)](https://github.com/rlaPHOENiX/VSMPEG/blob/master/LICENSE)
 [![DeepSource](https://deepsource.io/gh/rlaPHOENiX/VSMPEG.svg/?label=active+issues)](https://deepsource.io/gh/rlaPHOENiX/VSMPEG/?ref=repository-badge)
 [![Tip Me via Bitcoin](https://img.shields.io/badge/Bitcoin-tip%20me-f7931a.svg?logo=bitcoin)](https://raw.githubusercontent.com/rlaPHOENiX/VSMPEG/master/docs/assets/images/19LMDTZhwuiELUPbpj1wrnBKPZpDj699Mk.webp)
