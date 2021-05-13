@@ -9,8 +9,6 @@ While commonly referred to as a deinterlacer, it itself is not a deinterlacer. I
 [![DeepSource](https://deepsource.io/gh/rlaPHOENiX/VSMPEG.svg/?label=active+issues)](https://deepsource.io/gh/rlaPHOENiX/VSMPEG/?ref=repository-badge)
 [![Tip Me via Bitcoin](https://img.shields.io/badge/Bitcoin-tip%20me-f7931a.svg?logo=bitcoin)](https://raw.githubusercontent.com/rlaPHOENiX/VSMPEG/master/docs/assets/images/19LMDTZhwuiELUPbpj1wrnBKPZpDj699Mk.webp)
 
-* * *
-
 ## Installation
 
 ### Dependencies
@@ -48,8 +46,6 @@ Go to the Dependencies section of [pvsfunc]'s README and see what is needed for 
 From there, the README will also provide instructions on how to install them. If you need the dependency but don't
 have it, then pvsfunc (and therefore VSMPEG) will error out and tell you what is needed to be installed.
 
-* * *
-
 ## Usage
 
 This is a brief explanation of usage of VSMPEG, more verbose information and other ways of using VSMPEG can be found
@@ -76,13 +72,9 @@ how to configure and what the options are and do.
 From here, feel free to use the full feature set of VapourSynth-Editor, like Previewing (`F5`), Benchmarking (`F7`),
 and Encoding (`F8`).
 
-* * *
-
 ## Documentation
 
 You can view the documentation at <https://rlaphoenix.github.io/VSMPEG> or in the [/docs] folder.
-
-* * *
 
 ## Introduction to VapourSynth and VapourSynth Script (.vpy) files
 
@@ -112,8 +104,6 @@ even on high-end hardware. However, if it becomes the case of the deinterlacing 
 time or hardware to improve, this script could be used in realtime as a sort of intermediate layer or plugin to
 automatically handle MPEG-1 and MPEG-2 (e.g. DVD) playback automatically without any configuration by the user.
 That would be awesome!
-
-* * *
 
 ## Troubleshooting
 
