@@ -15,7 +15,7 @@ While commonly referred to as a deinterlacer, it itself is not a deinterlacer. I
 
 Install dependencies in the listed order:
 
-1.  [Python] 3.6+ and [pip]. The required pip packages are listed in the [requirements.txt] file.
+1.  [Python] 3.6+. The required pip packages are listed in the [requirements.txt] file.
 2.  [VapourSynth] latest is always recommended.
 3.  That's all the dependencies VSMPEG directly requires. However, you may need to follow the dependencies listed
     by [pvsfunc] which is a pivotal component of VSMPEG.
@@ -119,7 +119,6 @@ You _might_ need to fully uninstall the current Python and VapourSynth installat
 
 
   [Python]: <https://python.org>
-  [pip]: <https://pip.pypa.io/en/stable/installing>
   [requirements.txt]: <https://github.com/rlaPHOENiX/VSMPEG/blob/master/requirements.txt>
   [VapourSynth]: <https://vapoursynth.com>
   [pvsfunc]: <https://github.com/rlaPHOENiX/pvsfunc>
