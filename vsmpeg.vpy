@@ -136,7 +136,8 @@ if config["VSGAN"]["Enabled"]:
         model = anti_file_prefix(operation["model"])
         if instances[operation["device"]].model != model:
             instances[operation["device"]].load_model(model)
-        clip = core.resize.Spline36(
+        kernel = getattr(core.resize, config["VSGAN"]["Kernel"])
+        clip = kernel(
             clip,
             format=vs.RGB24,
             **(dict(
@@ -158,7 +159,7 @@ if config["VSGAN"]["Enabled"]:
         else:
             clip = instances[operation["device"]].run(clip, chunk=operation.get("chunk", False))
         if operation.get("resample"):
-            clip = core.resize.Spline36(
+            clip = kernel(
                 clip,
                 width=operation["resample"] * (clip.width / clip.height),
                 height=operation["resample"]

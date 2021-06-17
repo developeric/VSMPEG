@@ -74,10 +74,12 @@ AspectRatio:
 # >>> Machine Learning and Networks
 
 VSGAN:
-  # Note: - VSGAN returns the result clip in RGB, and RGB->YUV and YUV->RGB is lossy.
+  # Note: - VSGAN requires the input clip to be RGB, as ESRGAN works on linear-RGB data.
+  #       - VSGAN returns the result clip in RGB, and RGB->YUV and YUV->RGB is lossy.
   #       - Try not to convert color spaces at all if not absolutely necessary.
   Enabled: false
   Comparer: Interleave  # ~ = Off, Interleave, StackHorizontal
+  Kernel: Spline16  # kernel used during any resampling or color space conversion. See note #1 above.
   Operations:
     - enabled: false
       model: C:/Users/John/Documents/VSGAN/models/anime_upscaler/5000_G.pth
