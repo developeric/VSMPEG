@@ -84,18 +84,21 @@ VSGAN:
     - enabled: false
       model: C:/Users/John/Documents/VSGAN/models/anime_upscaler/5000_G.pth
       device: 1
+      skip_progressive: false
       chunk: false
       presample: false
       resample: 1080
     - enabled: false
       model: C:/Users/John/Documents/VSGAN/models/denoiser/2000_G.pth
       device: 1
+      skip_progressive: false
       chunk: false
       presample: 1080
       resample: 1080
     - enabled: true
       model: C:/Users/John/Documents/VSGAN/models/inpainter/12000_G.pth
       device: 1
+      skip_progressive: true
       chunk: false
       presample: false
       resample: false
