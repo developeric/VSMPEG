@@ -19,32 +19,6 @@ on the [pvsfunc] README.
 
   [C Libraries]: <https://www.vapoursynth.com/doc/installation.html>
 
-### Installing Python and VapourSynth
-
-Ensure the Python version you have installed (or are going to install) is supported by the version of VapourSynth
-you are installing. The supported Python versions in correlation to a VapourSynth version may differ per OS,
-notably on Windows due to its Python environment in general.
-
-When installing Python and VapourSynth, you will be given the option to "Install for all users" by both. Make sure
-your chosen answer matches for both software or VapourSynth and Python won't be able to locate each other.
-
-### Installing the required pip packages
-
-Use Terminal to navigate to the downloaded (or cloned) location (e.g. `cd C:/Users/John/Documents/VSMPEG`) and then
-run `pip install -r requirements.txt`.
-
-Note: I do not recommend running `pip` with administrator permission!
-
-### pvsfunc and it's dependencies
-
-[pvsfunc] is used all over VSMPEG, in fact, VSMPEG is really just
-a wrapper for pvsfunc; an example use-case of pvsfunc. This means you must make sure to install any needed
-dependencies for pvsfunc.
-
-Go to the Dependencies section of [pvsfunc]'s README and see what is needed for the input file you are working with.
-From there, the README will also provide instructions on how to install them. If you need the dependency but don't
-have it, then pvsfunc (and therefore VSMPEG) will error out and tell you what is needed to be installed.
-
 ## Usage
 
 This is a brief explanation of usage of VSMPEG, more verbose information and other ways of using VSMPEG can be found
