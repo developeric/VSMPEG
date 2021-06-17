@@ -16,12 +16,12 @@ Documentation and information:
 https://rlaphoenix.github.io/VSMPEG
 """
 
-# get config from config.yml
 with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "config.yml")) as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
 
-# Cache Size
-if config["MaxCacheSize"]:
+if config.get("MaxCacheSize"):
+    if not config["MaxCacheSize"].isdigit():
+        raise Exception(f"MaxCacheSize should be an integer, not {type(config['MaxCacheSize'])}.")
     core.max_cache_size = config["MaxCacheSize"]
 
 # load file path with PSourcer
