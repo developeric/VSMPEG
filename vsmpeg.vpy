@@ -126,7 +126,7 @@ if config["AspectRatio"]["Value"]:
 if config.get("VSGAN", {}).get("Operations", []):
     from vsgan import VSGAN
 
-    before = clip if config["VSGAN"]["Comparer"] else None
+    before = clip if config["VSGAN"].get("Comparer") else None
     instances = {}
     for operation in config["VSGAN"]["Operations"]:
         if operation["device"] not in instances:
@@ -134,7 +134,7 @@ if config.get("VSGAN", {}).get("Operations", []):
         model = anti_file_prefix(operation["model"])
         if instances[operation["device"]].model != model:
             instances[operation["device"]].load_model(model)
-        kernel = getattr(core.resize, config["VSGAN"]["Kernel"])
+        kernel = getattr(core.resize, config["VSGAN"].get("Kernel") or "Spline16")
         clip = kernel(
             clip,
             format=vs.RGB24,
@@ -160,13 +160,13 @@ if config.get("VSGAN", {}).get("Operations", []):
                 width=operation["resample"] * (clip.width / clip.height),
                 height=operation["resample"]
             )
-    if config["VSGAN"].get("Comparer"):
+    if before:
         # match the res and format between the before clip and current clip
         if before.height != clip.height or before.width != clip.width:
             before = core.resize.Spline64(before, width=clip.width, height=clip.height)
         if before.format.id != clip.format.id:
             before = core.resize.Point(before, format=clip.format.id)
-        clip = getattr(core.std, config["VSGAN"]["Comparer"])([
+        clip = getattr(core.std, config["VSGAN"].get("Comparer") or "StackHorizontal")([
             core.text.Text(before, "Original"),
             core.text.Text(clip, "Result")
         ])
