@@ -123,7 +123,7 @@ if config["AspectRatio"]["Value"]:
 # >>> Machine Learning and Networks
 
 # VSGAN
-if config["VSGAN"]["Enabled"]:
+if config.get("VSGAN", {}).get("Operations", []):
     from vsgan import VSGAN
 
     before = clip if config["VSGAN"]["Comparer"] else None
