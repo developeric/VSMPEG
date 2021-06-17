@@ -1,8 +1,7 @@
 # VSMPEG
 
-VapourSynth script to automatically handle fields of an MPEG video file to return a Progressive CFR video stream.
-While commonly referred to as a deinterlacer, it itself is not a deinterlacer. It is more of a boiler template for
-[pvsfunc], which it itself is more of a wrapper for various purposes.
+Boilerplate VapourSynth script that handles a few common operations. It internally uses [pvsfunc] to handle scan, vfr,
+and vst.
 
 [![Build Tests](https://img.shields.io/github/workflow/status/rlaPHOENiX/VSMPEG/Version%20test?label=Python%203.6%2B%20builds)](https://github.com/rlaPHOENiX/VSMPEG/actions?query=workflow%3A%22Version+test%22)
 [![License](https://img.shields.io/github/license/rlaPHOENiX/VSMPEG?style=flat)](https://github.com/rlaPHOENiX/VSMPEG/blob/master/LICENSE)
