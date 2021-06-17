@@ -79,6 +79,8 @@ AspectRatio:
 #   msmooth: 3
 #   nrmode: 2
 
+# PlaneShuffle: ["RGB", [0, 1, 2]]
+
 # >>> Machine Learning and Networks
 
 # VSGAN:  # uncomment to enable VSGAN

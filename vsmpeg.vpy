@@ -171,4 +171,8 @@ if config.get("VSGAN", {}).get("Operations", []):
             core.text.Text(clip, "Result")
         ])
 
+if config.get("PlaneShuffle"):
+    color_family, planes = config["PlaneShuffle"]
+    clip = core.std.ShufflePlanes(clip, planes=planes, colorfamily=vs[color_family])
+
 clip.set_output()
