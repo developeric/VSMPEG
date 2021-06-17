@@ -26,7 +26,7 @@ if config.get("MaxCacheSize"):
     core.max_cache_size = config["MaxCacheSize"]
 
 Input = locals().get("Input", config["Input"].encode()).decode("utf8")
-psourcer = PSourcer(Input, debug=config["Verbose"])
+psourcer = PSourcer(Input, d2v_vst_vfr_mode=False, debug=config["Verbose"])
 sourcer = psourcer.sourcer
 clip = psourcer.clip
 
