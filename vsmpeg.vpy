@@ -149,15 +149,13 @@ if config["VSGAN"]["Enabled"]:
             clip = core.std.FrameEval(
                 clip,
                 functools.partial(
-                    lambda n, f, c: c if f.props["PVSFlagProgressiveFrame"] else instances[operation["device"]].run(
-                        c, chunk=operation.get("chunk", False)
-                    ),
+                    lambda n, f, c: c if f.props["PVSFlagProgressiveFrame"] else instances[operation["device"]].run(c),
                     c=clip
                 ),
                 prop_src=clip
             )
         else:
-            clip = instances[operation["device"]].run(clip, chunk=operation.get("chunk", False))
+            clip = instances[operation["device"]].run(clip)
         if operation.get("resample"):
             clip = kernel(
                 clip,
