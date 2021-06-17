@@ -10,14 +10,14 @@ and vst.
 
 ## Installation
 
-### Dependencies
+Requires [Python] 3.6+ and [VapourSynth] ([C Libraries], not the PyPI/PIP package).
 
-Install dependencies in the listed order:
+`pip install -r requirements.txt`
 
-1.  [Python] 3.6+. The required pip packages are listed in the [requirements.txt] file.
-2.  [VapourSynth] latest is always recommended.
-3.  That's all the dependencies VSMPEG directly requires. However, you may need to follow the dependencies listed
-    by [pvsfunc] which is a pivotal component of VSMPEG.
+From here, there's optional dependencies based on the files you intend to use VSMPEG with. See the dependencies list
+on the [pvsfunc] README.
+
+  [C Libraries]: <https://www.vapoursynth.com/doc/installation.html>
 
 ### Installing Python and VapourSynth
 
@@ -118,11 +118,9 @@ You _might_ need to fully uninstall the current Python and VapourSynth installat
 
 
   [Python]: <https://python.org>
-  [requirements.txt]: <https://github.com/rlaPHOENiX/VSMPEG/blob/master/requirements.txt>
   [VapourSynth]: <https://vapoursynth.com>
   [pvsfunc]: <https://github.com/rlaPHOENiX/pvsfunc>
   [VapourSynth Editor]: <https://forum.doom9.org/showthread.php?t=170965>
-  [VapourSynth]: <https://github.com/vapoursynth/vapoursynth>
   [Non-linear editing system]: <https://wikipedia.org/wiki/Non-linear_editing_system>
   [Python programming language]: <https://wikipedia.org/wiki/Python_(programming_language)>
   [/docs]: <https://github.com/rlaPHOENiX/VSMPEG/blob/master/docs/index.md>
