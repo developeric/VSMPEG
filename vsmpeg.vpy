@@ -24,8 +24,8 @@ if config.get("MaxCacheSize"):
         raise Exception(f"MaxCacheSize should be an integer, not {type(config['MaxCacheSize'])}.")
     core.max_cache_size = config["MaxCacheSize"]
 
-psourcer = PSourcer(Input, debug=config["Verbose"])
 Input = locals().get("Input", config["Input"].encode()).decode("utf8")
+psourcer = PSourcer(Input, debug=config["Verbose"])
 sourcer = psourcer.sourcer
 clip = psourcer.clip
 
