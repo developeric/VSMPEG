@@ -106,16 +106,15 @@ That would be awesome!
 
 ## Troubleshooting
 
-### Failed to initialize VapourSynth environment!
+### "Failed to initialize VapourSynth environment!"
 
 The application you are using (e.g. [VapourSynth Editor], vs-pipe) cannot find the VapourSynth library.
 Either you have only installed via `pip install vapoursynth`, and not installed the local C library or have
 installed the VapourSynth C library under a different Python version or Environment.
 
-Fix:
-Follow ["Installing Python and VapourSynth"](#installing-python-and-vapoursynth).
-You _might_ need to fully uninstall the current Python and VapourSynth installation.
-
+Fix: Generally speaking, just follow follow the Installation information above. You may have a broken python and/or
+VapourSynth C Library installation, or they do not have a match installation type (Current User vs All Users). If all
+else fails, try to fully uninstall the current Python and VapourSynth installations and try again.
 
   [Python]: <https://python.org>
   [VapourSynth]: <https://vapoursynth.com>
