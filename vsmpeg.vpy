@@ -5,7 +5,6 @@ import importlib
 import math
 import os
 
-import pkg_resources
 import vapoursynth as vs
 import yaml
 from pvsfunc import PSourcer, PDeinterlacer, PDecimate, PDebox
@@ -16,9 +15,6 @@ from vapoursynth import core
 Documentation and information:
 https://rlaphoenix.github.io/VSMPEG
 """
-
-# Constants
-VSGAN_MIN_VER = 121
 
 # get config from config.yml
 with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "config.yml")) as f:
@@ -128,12 +124,6 @@ if config["AspectRatio"]["Value"]:
 
 # VSGAN
 if config["VSGAN"]["Enabled"]:
-    try:
-        if int(pkg_resources.get_distribution("vsgan").version.replace(".", "")) < VSGAN_MIN_VER:
-            raise EnvironmentError(
-                "VSMPEG: Your VSGAN installation is too old. Update with `pip install --upgrade vsgan`")
-    except pkg_resources.DistributionNotFound:
-        raise EnvironmentError("VSMPEG: VSGAN needs to be installed, https://rlaphoenix.github.io/VSMPEG")
     from vsgan import VSGAN
 
     before = clip if config["VSGAN"]["Comparer"] else None
