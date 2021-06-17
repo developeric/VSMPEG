@@ -136,13 +136,14 @@ if config["VSGAN"]["Enabled"]:
         model = anti_file_prefix(operation["model"])
         if instances[operation["device"]].model != model:
             instances[operation["device"]].load_model(model)
-        if operation.get("presample"):
-            clip = core.resize.Spline36(
-                clip,
+        clip = core.resize.Spline36(
+            clip,
+            format=vs.RGB24,
+            **(dict(
                 width=operation["presample"] * (clip.width / clip.height),
                 height=operation["presample"]
-            )
-        clip = core.resize.Spline64(clip, format=vs.RGB24)
+            ) if operation.get("presample") else {})
+        )
         if operation.get("skip_progressive"):
             clip = core.std.FrameEval(
                 clip,
