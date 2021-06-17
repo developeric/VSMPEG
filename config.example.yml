@@ -71,6 +71,14 @@ AspectRatio:
   Axis: width  # which axis to resize to get the wanted aspect ratio, width, or height
   Kernel: Spline64  # which function in core.resize do you want to use as a resize kernel?
 
+# >>> General Filters
+
+# Dering:  # uncomment to enable
+#   # havsfunc HQDeringmod, all arguments for it are valid options here.
+#   mrad: 2
+#   msmooth: 3
+#   nrmode: 2
+
 # >>> Machine Learning and Networks
 
 # VSGAN:  # uncomment to enable VSGAN

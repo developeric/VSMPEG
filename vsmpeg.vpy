@@ -9,6 +9,7 @@ import vapoursynth as vs
 import yaml
 from pvsfunc import PSourcer, PDeinterlacer, PDecimate, PDebox
 from pvsfunc.helpers import anti_file_prefix
+from havsfunc import HQDeringmod
 from vapoursynth import core
 
 """
@@ -113,6 +114,11 @@ if config["AspectRatio"]["Value"]:
                 clip=clip,
                 **{axis: {"w": w, "h": h}[axis[0]]}
             )
+
+# >>> General Filters
+
+if config.get("Dering"):
+    clip = HQDeringmod(clip, **config.get("Dering"))
 
 # >>> Machine Learning and Networks
 
