@@ -81,21 +81,18 @@ VSGAN:
   Comparer: Interleave  # ~ = Off, Interleave, StackHorizontal
   Kernel: Spline16  # kernel used during any resampling or color space conversion. See note #1 above.
   Operations:
-    - enabled: false
-      model: C:/Users/John/Documents/VSGAN/models/anime_upscaler/5000_G.pth
+    # - model: C:/Users/John/Documents/VSGAN/models/anime_upscaler/5000_G.pth
+    #   device: 1
+    #   skip_progressive: false
+    #   presample: false
+    #   resample: 1080
+    - model: C:/Users/John/Documents/VSGAN/models/denoiser/2000_G.pth
       device: 1
       skip_progressive: false
-      presample: false
-      resample: 1080
-    - enabled: false
-      model: C:/Users/John/Documents/VSGAN/models/denoiser/2000_G.pth
-      device: 1
-      skip_progressive: false
-      presample: 1080
-      resample: 1080
-    - enabled: true
-      model: C:/Users/John/Documents/VSGAN/models/inpainter/12000_G.pth
-      device: 1
-      skip_progressive: true
-      presample: false
-      resample: false
+      presample: 480
+      resample: 720
+    # - model: C:/Users/John/Documents/VSGAN/models/inpainter/12000_G.pth
+    #   device: 1
+    #   skip_progressive: true
+    #   presample: false
+    #   resample: false

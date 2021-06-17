@@ -129,8 +129,6 @@ if config["VSGAN"]["Enabled"]:
     before = clip if config["VSGAN"]["Comparer"] else None
     instances = {}
     for operation in config["VSGAN"]["Operations"]:
-        if not operation["enabled"]:
-            continue
         if operation["device"] not in instances:
             instances[operation["device"]] = VSGAN(operation["device"])
         model = anti_file_prefix(operation["model"])
