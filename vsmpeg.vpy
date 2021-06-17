@@ -24,11 +24,8 @@ if config.get("MaxCacheSize"):
         raise Exception(f"MaxCacheSize should be an integer, not {type(config['MaxCacheSize'])}.")
     core.max_cache_size = config["MaxCacheSize"]
 
-# load file path with PSourcer
-if "video_in" in locals():  # MPV
-    Input = locals()["video_in"]
-elif "Input" in locals():   # VSPIPE
-    Input = locals()["Input"].decode("utf-8")
+if "Input" in locals():
+    Input = locals()["Input"].decode("utf8")
 else:
     Input = config["Input"]
 psourcer = PSourcer(Input, debug=config["Verbose"])
