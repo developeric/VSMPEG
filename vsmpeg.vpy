@@ -172,9 +172,5 @@ if config["VSGAN"]["Enabled"]:
             core.text.Text(before, "Original"),
             core.text.Text(clip, "Result")
         ])
-    if config["VSGAN"]["ConvertColorSpace"]["Enabled"]:
-        cs_format = getattr(vs, config["VSGAN"]["ConvertColorSpace"]["Format"])
-        if clip.format.id != cs_format:
-            clip = core.resize.Point(clip, matrix_s="709", format=cs_format)
 
 clip.set_output()
