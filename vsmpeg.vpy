@@ -26,7 +26,9 @@ if config.get("MaxCacheSize"):
     core.max_cache_size = config["MaxCacheSize"]
 
 Input = locals().get("Input", config["Input"].encode()).decode("utf8")
-psourcer = PSourcer(Input, d2v_vst_vfr_mode=False, debug=config["Verbose"])
+Verbose = config.get("Verbose") or False
+
+psourcer = PSourcer(Input, d2v_vst_vfr_mode=False, debug=Verbose)
 sourcer = psourcer.sourcer
 clip = psourcer.clip
 
@@ -37,7 +39,7 @@ if config["ChromaLocation"] is not None:
     clip = psourcer.change_chroma_loc(
         clip,
         new_loc=config["ChromaLocation"],
-        verbose=config["Verbose"]
+        verbose=Verbose
     )
 
 # >>> Scan
@@ -62,7 +64,7 @@ if config["Deinterlacer"]:
         clip,
         kernel=config["Deinterlacer"],
         kernel_args=deinterlacer["Args"],
-        debug=config["Verbose"]
+        debug=Verbose
     ).clip
 
 # >>> Frame-rate
@@ -75,7 +77,7 @@ if config["Decimation"]["Enabled"]:
         mode={False: 0, True: 1}[len(config["Decimation"]["Offsets"]) == 0],
         cycle=config["Decimation"]["Cycle"],
         offsets=config["Decimation"]["Offsets"] or None,
-        debug=config["Verbose"]
+        debug=Verbose
     ).clip
 
 # >>> Resizing and Cropping
